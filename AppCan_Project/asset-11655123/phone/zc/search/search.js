@@ -1,8 +1,15 @@
 (function(){
-    var search = JSON.parse(unescape(sys_common.getQueryString("q")));
+    var q = sys_common.getQueryString("q");
+    var search = null;
+    if(q) { //判断是否接收到传递的参数
+        search = JSON.parse(unescape(q));
+    }
     var vm = new Vue({
         el : "#Page",
         mounted : function(){
+            if(!search) {
+                return;
+            }
             $.ajax({
                 url : sys_common.rootPath + sys_common.contextPath + 'zichan/list',
                 type : 'GET',
@@ -37,7 +44,7 @@
                 var selectedIds = vm.$data.resultList.filter(function(item){
                     return item.isSelected;
                 }).map(function(item){
-                    return item.UUID;
+                    return item.uuid;
                 });
                 if(selectedIds.length == 0) {
                     appcan.window.openToast('请选择加入到清单的资产', '2000');
@@ -53,12 +60,21 @@
                     oldList = JSON.parse(oldList);
                     localStorage.setItem("selectedIds", JSON.stringify(selectedIds.concat(oldList)));
                 }
+                appcan.window.openToast('添加成功', '2000');
             },
+            /**
+             * 查看清单
+             */
             showList : function() {
-                
+                var operate = sys_common.getQueryString("operate");
+                switch(operate) {
+                    case "1" : appcan.openWinWithUrl('zcck_list','zcck/zcck_list.html?operate='+operate);break;
+                    case "2" : 
+                    case "3" : 
+                    case "4" :
+                    default : 
+                }
             }
         }
-    
     });
-
 })();

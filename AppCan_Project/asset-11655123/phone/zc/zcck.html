@@ -114,8 +114,7 @@
             </div>
             <div class="uf sc-bg ubt sc-border-tab ub-f1 ub" data-control="FOOTER" id="Footer">
                 <div class="ub-f1 ub" data-control="TAB" id="Tab"></div>
-                <div class="ub ub-ac" data-control="BOX" id="Box_footer">
-                </div>
+                <div class="ub ub-ac" data-control="BOX" id="Box_footer"></div>
             </div>
         </div>
     </div>
@@ -164,7 +163,8 @@
                 'mingch':name!=null ? vm.$data.names[name] : "",
                 'lbie' : type!=null ? vm.$data.types[type] : ""
             }
-             appcan.openWinWithUrl('search', 'search.html?q='+escape(JSON.stringify(search)));
+            //operate表示操作类型, 1代表出库
+             appcan.openWinWithUrl('search', 'search.html?operate=1&q='+escape(JSON.stringify(search)));
         })
         appcan.button("#cancel", "ani-act", function() {
             uexWindow.windowBack(); //退回上一个视图
