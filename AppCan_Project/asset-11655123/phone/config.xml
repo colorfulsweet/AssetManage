@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<widget appId="11655123" channelCode="0000" height="480" pid="" sreensize="4.5" version="00.00.0000" viewmode="application" widgetId="" width="320">
+    <name>asset</name>
+    <description/>
+    <author email=""/>
+    <icon src="icon.png"/>
+    <license href=""/>
+    <content encoding="utf-8" src="index.html"/>
+    <updateurl>http:..svn.appcan.cn/sourceCode/116/551/23/trunk</updateurl>
+    <logserverip>192.168.31.19</logserverip>
+    <showmyspace>false</showmyspace>
+    <obfuscation>true</obfuscation>
+    <bgcolor>#fefefe</bgcolor>
+    <orientation>15</orientation>
+    <error src="error"/>
+    <removeloading/>
+    <debug>true</debug>
+    <partobfuscation/>
+    <webapp>false</webapp>
+</widget>

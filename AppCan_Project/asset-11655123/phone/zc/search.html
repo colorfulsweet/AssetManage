@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!-- 资产信息查询结果 -->
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../css/ui-box.css">
+        <link rel="stylesheet" href="../css/ui-base.css">
+        <link rel="stylesheet" href="../css/ui-color.css">
+        <link rel="stylesheet" href="../css/appcan.icon.css">
+        <link rel="stylesheet" href="../css/appcan.control.css">
+        <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
+        <style>
+        tr.selected {
+            background-color : #00A1EA !important;
+        }
+        </style>
+    </head>
+    <body class="" ontouchstart>
+        <div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
+            <div class="uh bc-head  ubb bc-border" data-control="HEADER" id="Header">
+                <div class="ub">
+                    <div class="nav-btn" id="nav-left" v-on:click="reback">
+                        <div class="ub-img1 icon-left ulev2">
+                        </div>
+                    </div>
+                    <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">查询结果</h1>
+                    <div class="nav-btn" id="nav-right">
+                        <div class="ub-img1 icon-more ulev2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="" data-control="CONTENT" id="ScrollContent">
+  <div class="scrollbox">
+    <div class="box_bounce ub ub-ver ub-pc">
+      <div class="ub-f1">
+      </div>
+      <div class="bounce_status">下拉更新......</div>
+      <div class="bounce_status">松手更新......</div>
+      <div class="bounce_status">更新中......</div>
+    </div>
+<div class="ub ub-ver">
+<table class="table table-striped" style="margin-top:100px">
+<thead >
+    <th>编码</th>
+    <th>名称</th>
+    <th>类别</th>
+</thead>
+<tbody>
+    <tr v-for="item in resultList" v-on:click="trSelect(item)" >
+        <td>{{item.zcID}}</td>
+        <td>{{item.mingch}}</td>
+        <td>{{item.lbie}}</td>
+    </tr>
+</tbody>
+</table>
+<div v-if="!resultList || resultList.length==0">没有符合条件的数据</div>
+        <div class="uinn uinn-at1">
+            <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="addToList">添加到清单</div>
+        </div>
+        <div class="uinn uinn-at1">
+            <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="showList" >查看清单</div>
+        </div>
+        <div class="uinn uinn-at1">
+            <div class="button ub ub-ac bc-text-head ub-pc sc-btn uc-a1" v-on:click="reback" >取消</div>
+        </div>
+        </div></div>
+        </div>
+        </div>
+        <script src="../js/appcan.js"></script>
+        <script src="../js/appcan.control.js"></script>
+        <script src="../js/appcan.scrollbox.js"></script>
+        <script src="../js/template.import.js"></script>
+		<script src="../js/appcan.listview.js"></script>
+		<script src="../js/appcan.optionList.js"></script>
+		<script src="../js/appcan.slider.js"></script>
+		<script src="../js/appcan.tab.js"></script>
+		<script src="../js/appcan.treeview.js"></script>
+		<script src="../js/vue/vue.js"></script>
+		<script src="../js/common.js"></script>
+		<script src="search/search.js"></script>
+    </body>
+</html>
