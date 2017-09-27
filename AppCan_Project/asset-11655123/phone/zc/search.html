@@ -34,40 +34,41 @@
                 </div>
             </div>
             <div class="" data-control="CONTENT" id="ScrollContent">
-  <div class="scrollbox">
-    <div class="box_bounce ub ub-ver ub-pc">
-      <div class="ub-f1">
-      </div>
-      <div class="bounce_status">下拉更新......</div>
-      <div class="bounce_status">松手更新......</div>
-      <div class="bounce_status">更新中......</div>
-    </div>
-<div class="ub ub-ver">
-<table class="table table-striped" style="margin-top:100px">
-<thead >
-    <th>编码</th>
-    <th>名称</th>
-    <th>类别</th>
-</thead>
-<tbody>
-    <tr v-for="item in resultList" v-on:click="trSelect(item)" >
-        <td>{{item.zcID}}</td>
-        <td>{{item.mingch}}</td>
-        <td>{{item.lbie}}</td>
-    </tr>
-</tbody>
-</table>
-<div v-if="!resultList || resultList.length==0">没有符合条件的数据</div>
-        <div class="uinn uinn-at1">
-            <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="addToList">添加到清单</div>
+        <div class="scrollbox">
+            <div class="box_bounce ub ub-ver ub-pc">
+              <div class="ub-f1">
+              </div>
+              <div class="bounce_status">下拉更新......</div>
+              <div class="bounce_status">松手更新......</div>
+              <div class="bounce_status">更新中......</div>
+            </div>
+            <div class="ub ub-ver">
+                <table class="table table-striped" style="margin-top:100px">
+                <thead >
+                    <th>编码</th>
+                    <th>名称</th>
+                    <th>类别</th>
+                </thead>
+                <tbody>
+                    <tr v-for="item in resultList" v-on:click="trSelect(item)" >
+                        <td>{{item.zcID}}</td>
+                        <td>{{item.mingch}}</td>
+                        <td>{{item.lbie}}</td>
+                    </tr>
+                </tbody>
+                </table>
+                <div v-if="!resultList || resultList.length==0">没有符合条件的数据</div>
+                <div class="uinn uinn-at1">
+                    <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="addToList">添加到清单</div>
+                </div>
+                <div class="uinn uinn-at1">
+                    <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="showList" >查看清单</div>
+                </div>
+                <div class="uinn uinn-at1">
+                    <div class="button ub ub-ac bc-text-head ub-pc sc-btn uc-a1" v-on:click="reback" >取消</div>
+                </div>
+            </div>
         </div>
-        <div class="uinn uinn-at1">
-            <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="showList" >查看清单</div>
-        </div>
-        <div class="uinn uinn-at1">
-            <div class="button ub ub-ac bc-text-head ub-pc sc-btn uc-a1" v-on:click="reback" >取消</div>
-        </div>
-        </div></div>
         <div class="uf sc-bg ubt sc-border-tab ub-f1 ub" data-control="FOOTER" id="Footer">
             <div class="ub-f1 ub" data-control="TAB" id="Tab"></div>
             <div class="ub ub-ac" data-control="BOX" id="Box_footer"></div>

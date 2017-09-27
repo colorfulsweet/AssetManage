@@ -74,6 +74,7 @@
                     case "4" :
                     default : 
                 }
+                uexWindow.close();//关闭当前视图
             }
         }
     });

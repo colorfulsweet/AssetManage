@@ -36,7 +36,7 @@
             'orderno':orderno,
             'asname':asname,
             'astype':astype,
-        }
+        };
         
         appcan.request.ajax({
             url : 'http://192.168.21.81:8080/book1/asset.do?action=assetifQuery',
@@ -57,12 +57,12 @@
                         content : "网络繁忙，请稍候再试！",
                         buttons : ['确定'],
                         
-                    })
+                    });
             }
             
-        })
+        });
         
-    })
+    });
 
 
 
@@ -82,7 +82,7 @@
         function() { //on scroll bottom,this event will be triggered.you should get data from server
             $("#ScrollContent").trigger("more", this);
         }).hide();
-    })
+    });
 
     var tabview_Tab = appcan.tab({
         selector: $("#Tab"),

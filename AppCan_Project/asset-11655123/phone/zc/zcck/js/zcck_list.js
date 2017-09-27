@@ -37,6 +37,13 @@ var vm = new Vue({
                 }
             });
             
+        },
+        /**
+         * 继续检索添加
+         */
+        continueSearch : function() {
+            appcan.openWinWithUrl('zcck','../zcck.html');
+            uexWindow.close();//关闭当前视图
         }
     }
 });
