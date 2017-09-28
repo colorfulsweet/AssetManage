@@ -12,7 +12,7 @@ var vm = new Vue({
         var jsonStr = localStorage.getItem("QrcodeContent");
         localStorage.removeItem("QrcodeContent");
         if(!jsonStr) {
-        return;
+            return;
         }
         */
         // ----TEST----
@@ -114,6 +114,18 @@ var vm = new Vue({
                     appcan.window.openToast('文件上传失败', '2000');
                 }
             });
+        },
+        /**
+         * 完成
+         */
+        finished : function() {
+            //TODO 跳转到下一个页面
+        },
+        /**
+         * 取消
+         */
+        cancel : function() {
+            uexWindow.close();//关闭当前页面
         }
     }
 });

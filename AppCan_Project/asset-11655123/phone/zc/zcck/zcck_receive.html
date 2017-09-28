@@ -45,7 +45,7 @@
             </thead>
             <tbody>
                 <tr v-for="(item,index) in zcList" v-on:click="trSelect(index)" v-bind:style="{color : index === selectItemIndex? 'red' : 'black'}" >
-                    <td>{{item.zcID}}</td>
+                    <td>{{item.zcid}}</td>
                     <td>{{item.mingch}}</td>
                     <td>{{item.lbie}}</td>
                     <td>
@@ -63,6 +63,12 @@
             </div>
             <div class="uinn-at1" style="margin: 10px 20px;">
                 <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="uploadPic">上传图片</div>
+            </div>
+            <div class="uinn-at1" style="margin: 10px 20px;">
+                <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="finished">完成</div>
+            </div>
+            <div class="uinn-at1" style="margin: 10px 20px;">
+                <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="cancel">取消</div>
             </div>
         </div>
         <script src="../../js/appcan.js"></script>

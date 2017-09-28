@@ -5,7 +5,7 @@
     <author email=""/>
     <icon src="icon.png"/>
     <license href=""/>
-    <content encoding="utf-8" src="index.html"/>
+    <content encoding="utf-8" src="login.html"/>
     <updateurl>http:..svn.appcan.cn/sourceCode/116/551/23/trunk</updateurl>
     <logserverip>192.168.31.19</logserverip>
     <showmyspace>false</showmyspace>
