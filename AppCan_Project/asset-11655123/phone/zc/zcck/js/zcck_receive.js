@@ -4,10 +4,10 @@ var vm = new Vue({
     data : {
         zcList : [],
         selectItemIndex : null,
-        lzIds : null
+        operateId : null
     },
     created : function() {
-        //二维码信息中包含 operateType 和 lzIds
+        //二维码信息中包含 operateType 和 operateId
         /*
         var jsonStr = localStorage.getItem("QrcodeContent");
         localStorage.removeItem("QrcodeContent");
@@ -16,15 +16,15 @@ var vm = new Vue({
         }
         */
         // ----TEST----
-        var jsonStr = '{"lzIds":["40289f935ec2fec8015ec3077b2a0000","40289f935ec2fec8015ec3077c450001"],"operateType":"1"}';
+        var jsonStr = '{"operateId":"49f0d5f8-2aac-43e9-9b6f-9614d1daecc7","operateType":"1"}';
         // ------------
-        var lzIds = JSON.parse(jsonStr).lzIds;
-        this.lzIds = lzIds;
+        var operateId = JSON.parse(jsonStr).operateId;
+        this.operateId = operateId;
         $.ajax({
             type : "POST",
-            url : sys_common.rootPath + sys_common.contextPath + "zichan/getByLzIds",
+            url : sys_common.rootPath + sys_common.contextPath + "zichan/getByOperateId",
             data : {
-                lzIds : lzIds.join(",")
+                operateId : operateId
             },
             success : function(res) {
                 if (Array.isArray(res)) {
@@ -32,7 +32,6 @@ var vm = new Vue({
                 } else {
                     vm.$data.zcList = JSON.parse(res);
                 }
-                vm.$data.zcList[0].imageSrc = "../../images/loading.gif";
             }
         });
     },
@@ -99,7 +98,7 @@ var vm = new Vue({
             // 以DataURL的形式读取文件:
             reader.readAsDataURL(file);
             var formData = new FormData(document.getElementById("uploadForm"));
-            formData.append("lzId",this.lzIds[0]);
+            formData.append("operateId",this.operateId);
             formData.append("zcId",this.zcList[this.selectItemIndex].uuid);
             $.ajax({
                 url : sys_common.rootPath + sys_common.contextPath + "lz/uploadPhoto",
@@ -119,7 +118,8 @@ var vm = new Vue({
          * 完成
          */
         finished : function() {
-            //TODO 跳转到下一个页面
+            //跳转至接收方确认页面
+            appcan.openWinWithUrl('zcck_confirm','zcck_confirm.html?operateId=' + this.operateId);
         },
         /**
          * 取消

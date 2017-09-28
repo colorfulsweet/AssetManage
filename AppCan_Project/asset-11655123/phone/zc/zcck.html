@@ -154,7 +154,7 @@
              var name = vm.$data.name_index;
              var type = vm.$data.type_index;
              
-             if(!orderno && name!=null && type!=null) {
+             if(!orderno && name==null && type==null) {
                 appcan.window.openToast('请输入查询条件', '2000');
                 return;
              }

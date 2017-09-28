@@ -100,7 +100,7 @@ lv.on("click",function(ele,obj,curEle){
         uexScanner.open(function(err, data){
             //包含type :"QR_CODE" ,code:扫描到的内容
             var content = JSON.parse(data.code);
-            if("operateType" in content && "lzIds" in content && Array.isArray(content.lzIds)) {
+            if("operateType" in content && "operateId" in content && Array.isArray(content.lzIds)) {
                 //将扫描获得的信息放在前端缓存
                 localStorage.setItem("QrcodeContent", data.code);
                 appcan.openWinWithUrl('zcck_receive','zc/zcck/zcck_receive.html');
