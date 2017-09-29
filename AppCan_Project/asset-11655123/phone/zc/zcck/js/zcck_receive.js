@@ -1,4 +1,4 @@
-(function() {
+appcan.ready(function() {
 var vm = new Vue({
     el : "#Page",
     data : {
@@ -9,18 +9,18 @@ var vm = new Vue({
     created : function() {
         //二维码信息中包含 operateType 和 operateId
         ///*
-        var jsonStr = localStorage.getItem("QrcodeContent");
-        localStorage.removeItem("QrcodeContent");
+        var jsonStr = appcan.locStorage.getVal("QrcodeContent");
+        appcan.locStorage.remove("QrcodeContent");
         if(!jsonStr) {
             return;
         }
         //*/
         // ----TEST----
-        //var jsonStr = '{"operateId":"49f0d5f8-2aac-43e9-9b6f-9614d1daecc7","operateType":"1"}';
+        //var jsonStr = '{"operateId":"4c3fc663-2b9d-4044-8fe8-6a6c3d279916","operateType":"1"}';
         // ------------
         var operateId = JSON.parse(jsonStr).operateId;
-        this.operateId = operateId;
-        $.ajax({
+        appcan.locStorage.setVal("operateId", operateId);
+        appcan.ajax({
             type : "POST",
             url : sys_common.rootPath + sys_common.contextPath + "zichan/getByOperateId",
             data : {
@@ -121,9 +121,9 @@ var vm = new Vue({
             // 以DataURL的形式读取文件:
             reader.readAsDataURL(file);
             var formData = new FormData(document.getElementById("uploadForm"));
-            formData.append("operateId",this.operateId);
+            formData.append("operateId",appcan.locStorage.getVal("operateId"));
             formData.append("zcId",this.zcList[this.selectItemIndex].uuid);
-            $.ajax({
+            appcan.ajax({
                 url : sys_common.rootPath + sys_common.contextPath + "lz/uploadPhoto",
                 type : "POST",
                 data : formData,
@@ -142,7 +142,8 @@ var vm = new Vue({
          */
         finished : function() {
             //跳转至接收方确认页面
-            appcan.openWinWithUrl('zcck_confirm','zcck_confirm.html?operateId=' + this.operateId);
+            
+            appcan.openWinWithUrl('zcck_confirm','zcck_confirm.html');
         },
         /**
          * 取消
@@ -152,5 +153,4 @@ var vm = new Vue({
         }
     }
 });
-
-})(); 
+}); 

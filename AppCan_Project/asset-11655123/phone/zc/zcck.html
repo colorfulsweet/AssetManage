@@ -163,8 +163,9 @@
                 'mingch':name!=null ? vm.$data.names[name] : "",
                 'lbie' : type!=null ? vm.$data.types[type] : ""
             }
-            //operate表示操作类型, 1代表出库
-             appcan.openWinWithUrl('search', 'search.html?operate=1&q='+escape(JSON.stringify(search)));
+            appcan.locStorage.setVal("operate", "1"); //operate表示操作类型, 1代表出库
+            appcan.locStorage.setVal("search",JSON.stringify(search));
+            appcan.openWinWithUrl('search', 'search.html');
         })
         appcan.button("#cancel", "ani-act", function() {
             uexWindow.windowBack(); //退回上一个视图

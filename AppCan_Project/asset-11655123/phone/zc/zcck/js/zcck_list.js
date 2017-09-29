@@ -1,11 +1,11 @@
-(function(){
+appcan.ready(function() {
 var vm = new Vue({
     el : "#Page",
     data : {
         zcList : []
     },
     created : function() {
-        var jsonStr = localStorage.getItem("selectedIds");
+        var jsonStr = appcan.locStorage.getVal("selectedIds");
         if(jsonStr) {
             this.zcList = JSON.parse(jsonStr);
         }
@@ -15,25 +15,28 @@ var vm = new Vue({
          * 跳转到生成二维码的界面
          */
         toQrcode : function() {
-            var login_user = localStorage.getItem("login_user");
+            var login_user = appcan.locStorage.getVal("login_user");
             if(!login_user) {
                 //未登录
                 appcan.openWinWithUrl('login','../../login.html');
                 return;
             }
-            //请求后台获得订单ID并传到显示二维码的页面(或者保存在localStorage)
-            $.ajax({
+            //请求后台获得订单ID并传到显示二维码的页面(或者保存在appcan.locStorage)
+            appcan.ajax({
                 url : sys_common.rootPath + sys_common.contextPath + "lz/save",
                 type : "POST",
                 async : true,
                 data : {
                     bgrId : JSON.parse(login_user).uuid,
-                    selectedIds : localStorage.getItem("selectedIds"),
-                    operate : sys_common.getQueryString("operate")
+                    selectedIds : appcan.locStorage.getVal("selectedIds"),
+                    operate : appcan.locStorage.getVal("operate")
                 },
                 success : function(res) {
-                    localStorage.removeItem("selectedIds"); //在缓存中移除选中的资产, 避免影响下次操作
-                    appcan.openWinWithUrl('qrcode','../qrcode.html?operateId='+res);
+                    appcan.locStorage.remove("operate");
+                    appcan.locStorage.remove("selectedIds"); //在缓存中移除选中的资产, 避免影响下次操作
+                    
+                    appcan.locStorage.setVal("operateId", res);
+                    appcan.openWinWithUrl('qrcode','../qrcode.html');
                 },
                 error : function(err){
                     appcan.alert({
@@ -55,6 +58,4 @@ var vm = new Vue({
     }
 });
 
-
-
-})();
+});

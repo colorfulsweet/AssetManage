@@ -68,9 +68,9 @@
         <script src="../js/common.js"></script>
         <script src="../js/vue/vue.js"></script>
         <script>
-(function(){
-var operateId = sys_common.getQueryString("operateId");
-var operateId='49f0d5f8-2aac-43e9-9b6f-9614d1daecc7';
+appcan.ready(function() {
+var operateId = appcan.locStorage.getVal("operateId");
+appcan.locStorage.remove("operateId");
 var vm = new Vue({
     el :"#Page",
     data : {
@@ -78,12 +78,17 @@ var vm = new Vue({
     },
     created : function(){
         var url = sys_common.rootPath + sys_common.contextPath + "lz/count/"+operateId;
-        $.get(url, null, function(res){
-            vm.$data.countData = res.data;
-        }, "json");
+        appcan.ajax({
+            url : url,
+            type : "GET",
+            dataType:"json",
+            success : function(res) {
+                vm.$data.countData = res.data;
+            }
+        });
     }
 });
-})();
+});
         </script>
     </body>
 </html>

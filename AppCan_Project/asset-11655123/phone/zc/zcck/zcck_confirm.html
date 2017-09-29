@@ -49,17 +49,23 @@
 		<script src="../../js/appcan.treeview.js"></script>
 		<script src="../../js/common.js"></script>
 		<script>
-  $(function(){
-    var operateId = sys_common.getQueryString("operateId");
-    var login_user = localStorage.getItem("login_user");
+appcan.ready(function() {
+    var operateId = appcan.locStorage.getVal("operateId");
+    var userJson = appcan.locStorage.getVal("login_user");
+    var loginUser = null;
+    if(userJson) {
+        loginUser = JSON.parse(userJson);
+    }
     $("#submit").on("click", function(){
-        $.get(sys_common.rootPath + sys_common.contextPath + "lz/finished", 
-            {operateId : operateId, bgrId: (login_user ? login_user.uuid : null)}, 
-            function(){
+        appcan.ajax({
+            url : sys_common.rootPath + sys_common.contextPath + "lz/finished",
+            data : {operateId : operateId, bgrId: (loginUser ? loginUser.uuid : "")},
+            success : function(){
                 alert("操作成功");
-            });
-    })
-  });
+            }
+        });
+    });
+});
 		</script>
     </body>
 </html>

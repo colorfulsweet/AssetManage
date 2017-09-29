@@ -1,21 +1,23 @@
-(function(){
-    var q = sys_common.getQueryString("q");
+appcan.ready(function() {
+    var searchStr = appcan.locStorage.getVal("search");
     var search = null;
-    if(q) { //判断是否接收到传递的参数
-        search = JSON.parse(unescape(q));
+    if(searchStr) {//判断是否接收到传递的参数
+        search = JSON.parse(searchStr);
+        appcan.locStorage.remove("saerch");
     }
     var vm = new Vue({
         el : "#Page",
-        mounted : function(){
+        created : function(){
             if(!search) {
                 return;
             }
-            $.ajax({
+            appcan.ajax({
                 url : sys_common.rootPath + sys_common.contextPath + 'zichan/list',
                 type : 'GET',
+                datatype : 'json',
                 data : search,
                 success : function(res) {
-                    vm.$data.resultList = res;
+                    vm.$data.resultList = JSON.parse(res);
                 }
             });
         },
@@ -51,14 +53,14 @@
                     return;
                 }
                 //由于可以多次添加, 需要获取到上次添加的列表
-                var oldList = localStorage.getItem("selectedIds");
+                var oldList = appcan.locStorage.getVal("selectedIds");
                 if(!oldList) {
                     //第一次添加
-                    localStorage.setItem("selectedIds", JSON.stringify(selectedIds));
+                    appcan.locStorage.setVal("selectedIds", JSON.stringify(selectedIds));
                 } else {
                     //不是第一次添加
                     oldList = JSON.parse(oldList);
-                    localStorage.setItem("selectedIds", JSON.stringify(selectedIds.concat(oldList)));
+                    appcan.locStorage.setVal("selectedIds", JSON.stringify(selectedIds.concat(oldList)));
                 }
                 appcan.window.openToast('添加成功', '2000');
             },
@@ -66,16 +68,9 @@
              * 查看清单
              */
             showList : function() {
-                var operate = sys_common.getQueryString("operate");
-                switch(operate) {
-                    case "1" : appcan.openWinWithUrl('zcck_list','zcck/zcck_list.html?operate='+operate);break;
-                    case "2" : 
-                    case "3" : 
-                    case "4" :
-                    default : 
-                }
+                appcan.openWinWithUrl('zcck_list','zcck/zcck_list.html');
                 uexWindow.close();//关闭当前视图
             }
         }
     });
-})();
+});

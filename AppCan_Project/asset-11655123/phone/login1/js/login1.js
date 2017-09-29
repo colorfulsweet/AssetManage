@@ -35,7 +35,7 @@
     });
     var loginSubmit = function(name, pwd) {
         window.appcan = appcan;
-        appcan.request.ajax({
+        appcan.ajax({
             url : sys_common.rootPath + sys_common.contextPath + 'login',
             type : 'POST',
             datatype : 'json',
@@ -48,7 +48,7 @@
                 var res = JSON.parse(resJson);
                 if (res.status === 1) {//登陆成功
                     appcan.window.openToast('登陆成功', '2000');
-                    localStorage.setItem("login_user", JSON.stringify(res.data));
+                    appcan.locStorage.setVal("login_user", JSON.stringify(res.data));
                     var timer = setTimeout(function() {
                         appcan.openWinWithUrl('index', 'index.html');
                         //页面跳转

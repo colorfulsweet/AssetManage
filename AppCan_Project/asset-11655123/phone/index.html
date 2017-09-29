@@ -102,7 +102,7 @@ lv.on("click",function(ele,obj,curEle){
             var content = JSON.parse(data.code);
             if("operateType" in content && "operateId" in content) {
                 //将扫描获得的信息放在前端缓存
-                localStorage.setItem("QrcodeContent", data.code);
+                appcan.locStorage.setVal("QrcodeContent", data.code);
                 appcan.openWinWithUrl('zcck_receive','zc/zcck/zcck_receive.html');
             } else {
                 appcan.window.openToast('无效内容', '2000');
