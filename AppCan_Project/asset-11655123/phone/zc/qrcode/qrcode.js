@@ -6,7 +6,7 @@ if(!operateId) {
 }
 $(function(){
     $("#qrcode_img").attr("src", sys_common.rootPath + sys_common.contextPath + "lz/outputQrcode/"+operateId);
-    //TODO  对后台执行轮询, 等待对方扫码之后确认完成, 显示出库清单
+    // 对后台执行轮询, 等待对方扫码之后确认完成, 显示出库清单
     
     var checkFinished = function() {
         $.get(sys_common.rootPath + sys_common.contextPath + "lz/checkFinished",

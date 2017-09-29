@@ -8,15 +8,15 @@ var vm = new Vue({
     },
     created : function() {
         //二维码信息中包含 operateType 和 operateId
-        /*
+        ///*
         var jsonStr = localStorage.getItem("QrcodeContent");
         localStorage.removeItem("QrcodeContent");
         if(!jsonStr) {
             return;
         }
-        */
+        //*/
         // ----TEST----
-        var jsonStr = '{"operateId":"49f0d5f8-2aac-43e9-9b6f-9614d1daecc7","operateType":"1"}';
+        //var jsonStr = '{"operateId":"49f0d5f8-2aac-43e9-9b6f-9614d1daecc7","operateType":"1"}';
         // ------------
         var operateId = JSON.parse(jsonStr).operateId;
         this.operateId = operateId;
@@ -49,10 +49,33 @@ var vm = new Vue({
         takePhoto : function() {
             // 调用摄像头拍照
             uexCamera.open(0, 60, function(picPath) {//获取到图片的路径
+                //创建图片上传器
+                var uploader = uexUploaderMgr.create({
+                    url : sys_common.rootPath + sys_common.contextPath + "lz/uploadPhoto",
+                    type : 0
+                });
+                //设置请求消息头
+                var headJson = {"Content-Type" : "multipart/form-data"};
+                uexUploaderMgr.setHeaders(uploader, JSON.stringify(headJson));
+                
+                //执行文件上传
+                uexUploaderMgr.uploadFile(uploader, picPath, "uploadPhoto", 2, 700,function(packageSize, percent, responseString, status){
+                    switch (status) {
+                    case 0: //上传中
+                        //document.getElementById('percentage').innerHTML = "上传包大小:"+packageSize+"<br>上传进度:"+percent+"%";
+                        break;
+                    case 1: //上传成功
+                        alert("上传成功,服务器response:"+responseString);
+                        break;
+                    case 2: //上传失败
+                        alert("上传失败");
+                        break;
+                    }
+                });
                 appcan.alert({
                     title : "图片路径",
                     content : picPath,
-                    buttons : ['确定'],
+                    buttons : ['确定']
                 });
             });
         },
