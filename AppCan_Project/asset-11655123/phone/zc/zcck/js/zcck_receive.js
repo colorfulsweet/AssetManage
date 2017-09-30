@@ -40,7 +40,10 @@ var vm = new Vue({
          * 表格行 点击事件
          * @param {Object} index 该行索引(从0开始)
          */
-        trSelect : function(index) {
+        trSelect : function(item,index) {
+            var target = $(event.currentTarget);
+            target.parent("div").children().removeClass("selected");
+            target.addClass("selected");
             vm.$data.selectItemIndex = index;
         },
         /**

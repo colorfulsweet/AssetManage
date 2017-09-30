@@ -10,6 +10,7 @@ $("#qrcode_img").attr("src", sys_common.rootPath + sys_common.contextPath + "lz/
 var checkFinished = function() {
     appcan.ajax({
         url : sys_common.rootPath + sys_common.contextPath + "lz/checkFinished",
+        type : "GET",
         data : {operateId: operateId, r:Math.random()}, //添加随机数防止缓存
         dataType : "json",
         success : function(res){

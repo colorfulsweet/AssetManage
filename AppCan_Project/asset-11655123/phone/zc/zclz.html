@@ -4,12 +4,12 @@
         <title></title>
         <meta charset="utf-8">
         <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
-        <link rel="stylesheet" href="css/ui-box.css">
-        <link rel="stylesheet" href="css/ui-base.css">
-        <link rel="stylesheet" href="css/ui-color.css">
-        <link rel="stylesheet" href="css/appcan.icon.css">
-        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../css/ui-box.css">
+        <link rel="stylesheet" href="../css/ui-base.css">
+        <link rel="stylesheet" href="../css/ui-color.css">
+        <link rel="stylesheet" href="../css/appcan.icon.css">
+        <link rel="stylesheet" href="../css/appcan.control.css">
         <link rel="stylesheet" href="zclz/css/zclz.css">
     </head>
     <body class="" ontouchstart>
@@ -19,7 +19,7 @@
                     <div class="nav-btn" id="nav-left">
                         <div class="fa fa-1g ub-img1 fa-align-justify"></div>
                     </div>
-                    <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">流转流程</h1>
+                    <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">资产流转</h1>
                     <div class="nav-btn" id="nav-right">
                          <div class="fa  fa-1g  ub-img1 fa-search"></div>
                     </div>
@@ -40,9 +40,7 @@
                         </div>
                     </div>
                     <div class="ub ub-ver">
-                        <div id="Text1">
-                                                                                             资产查询检索
-                        </div>
+                        <div id="Text1"> 资产查询检索</div>
                         <div class="ub ub-ver ub-f1">
                        <form method="post">
                             <ul  class=" ubb ub bc-border bc-text ub-ac uinn">
@@ -112,27 +110,15 @@
                 </div>
                 <div>
                     <div class=" uinn uinn-at1">
-                        <div class="button ub ub-ac bc-text-head ub-pc bc-btn"  id="btn">
+                        <div class="button ub ub-ac bc-text-head ub-pc bc-btn"  id="search">
                             查询
                         </div>
                     </div>
                     <div class=" uinn uinn-at1">
-                        <div class="button ub ub-ac bc-text-head ub-pc bc-btn"  id="btn1">
+                        <div class="button ub ub-ac bc-text-head ub-pc bc-btn"  id="cancel">
                             取消
                         </div>
                     </div>
-
-
-                    
-                   <!-- <div class="bc-bg ub-f1 ub-pc ub-ac" tabindex="0" data-control="PAGE" id="Page_KNj5Dj" data-bind="value:index;">
-                      <div class="button ub ub-ac bc-text-head ub-pc bc-btn" id="Button_cNmi2S">确定</div> -->
-                      <!-- <div class="button ub ub-ac bc-text-head ub-pc bc-btn" id="Button_cNmi2S">
-                          检索
-                      </div>
-                      <div class="button ub ub-ac bc-text-head ub-pc bc-btn" id="Button_qiJYJt">确定</div>
-                  </div> -->
-
-                    
                 </div>
               </form>
             </div>
@@ -145,36 +131,24 @@
     </div>
         
         
-        <script src="js/appcan.js"></script>
-        <script src="js/appcan.control.js"></script>
-        <script src="js/appcan.scrollbox.js"></script>
-        <script src="js/template.import.js"></script>
-        <script src="js/appcan.listview.js"></script>
-        <script src="js/appcan.optionList.js"></script>
-        <script src="js/appcan.slider.js"></script>
-        <script src="js/appcan.tab.js"></script>
-        <script src="js/appcan.treeview.js"></script>
+        <script src="../js/appcan.js"></script>
+        <script src="../js/appcan.control.js"></script>
+        <script src="../js/appcan.scrollbox.js"></script>
+        <script src="../js/template.import.js"></script>
+        <script src="../js/appcan.listview.js"></script>
+        <script src="../js/appcan.optionList.js"></script>
+        <script src="../js/appcan.slider.js"></script>
+        <script src="../js/appcan.tab.js"></script>
+        <script src="../js/appcan.treeview.js"></script>
         <script src="zclz/js/zclz.js"></script>    
         <script>
-                appcan.select(".select",function(ele,value){
-                    
-                    console.log(value);
-                });
-        </script>    
-        <script>
-                appcan.select(".select",function(ele,value){
-                    console.log(value);
-                });
-        </script>    
-        <script>
-                appcan.button(".btn", "ani-act", function() {
-            
-                })
-        </script>    
-        <script>
-                appcan.button(".btn", "ani-act", function() {
-            
-                })
-        </script>    
+        appcan.select(".select",function(ele,value){
+            console.log(value);
+        });
+
+        appcan.button("#cancel", "ani-act", function() {
+            uexWindow.close();
+        });
+        </script>
     </body>
 </html>

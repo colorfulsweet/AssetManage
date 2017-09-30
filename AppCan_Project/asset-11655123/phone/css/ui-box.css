@@ -142,4 +142,8 @@
 	background-repeat:no-repeat;
 	background-position:center;
 }
+/*----- new -----*/
+div#ScrollContent {
+    padding-top:3em;
+}
 

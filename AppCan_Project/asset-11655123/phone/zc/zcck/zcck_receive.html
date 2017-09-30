@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- 扫码之后加载出库清单的页面 -->
 <html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
     <head>
         <title></title>
@@ -11,7 +10,6 @@
         <link rel="stylesheet" href="../../css/ui-color.css">
         <link rel="stylesheet" href="../../css/appcan.icon.css">
         <link rel="stylesheet" href="../../css/appcan.control.css">
-        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
         <style>
         .img-preview {
             height:100px;
@@ -20,7 +18,9 @@
             background-repeat: no-repeat;
             background-position: center center;
         }
-        
+        div.selected {
+            background-color : #00A1EA !important;
+        }
         </style>
     </head>
     <body class="" ontouchstart>
@@ -36,52 +36,74 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-striped" style="margin-top:100px">
-            <thead >
-                <th>编码</th>
-                <th>名称</th>
-                <th>类别</th>
-                <th>照片</th>
-            </thead>
-            <tbody>
-                <tr v-for="(item,index) in zcList" v-on:click="trSelect(index)" v-bind:style="{color : index === selectItemIndex? 'red' : 'black'}" >
-                    <td>{{item.zcid}}</td>
-                    <td>{{item.mingch}}</td>
-                    <td>{{item.lbie}}</td>
-                    <td>
-                        <div class="img-preview"></div> 
-                    </td>
-                </tr>
-            </tbody>
-            </table>
-            <form action="" id="uploadForm" method="post" enctype="multipart/form-data" style="display:none;">
-                <input type="file" id="uploadPhoto" name="uploadPhoto" v-on:change="selectFile"/>
-            </form>
-            
-            <div class="uinn-at1" style="margin: 10px 20px;">
-                <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="takePhoto">拍照</div>
+            <div class="" data-control="CONTENT" id="ScrollContent">
+  <div class="scrollbox">
+    <div class="box_bounce ub ub-ver ub-pc">
+      <div class="ub-f1">
+      </div>
+      <div class="bounce_status">下拉更新......</div>
+      <div class="bounce_status">松手更新......</div>
+      <div class="bounce_status">更新中......</div>
+    </div>
+        <div class="ub ub-hor ub-f1 ulev-1 uinn ub-ac c-gra1 txtcolor">
+            <div class="ub-f1 ub-con ub-ac ub-pc ub">
+                编码
             </div>
-            <div class="uinn-at1" style="margin: 10px 20px;">
-                <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="uploadPic">上传图片</div>
+            <div class="umw1"></div>
+            <div class="ub-f1 ub-con ub-ac ub-pc ub">
+                名称
             </div>
-            <div class="uinn-at1" style="margin: 10px 20px;">
-                <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="finished">完成</div>
+            <div class="umw1"></div>
+            <div class="ub-f1 ub-con ub-ac ub-pc ub">
+                类别
             </div>
-            <div class="uinn-at1" style="margin: 10px 20px;">
-                <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="cancel">取消</div>
+            <div class="umw1"></div>
+            <div class="ub-f1 ub-con ub-ac ub-pc ub">
+                照片
             </div>
+        </div>
+        <div>
+            <div class="ub ub-hor ub-f1 ulev-1 uinn ub-ac umh4" v-for="(item,index) in zcList" v-on:click="trSelect(item,index)" >
+                <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.zcid}}</div>
+                <div class="umw1"></div>
+                <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.mingch}}</div>
+                <div class="umw1"></div>
+                <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.lbie}}</div>
+                <div class="umw1"></div>
+                <div class="ub-f1 ub-con ub-ac ub-pc ub">
+                    <div class="img-preview"></div>
+                </div>
+            </div>
+        </div>
+        <form action="" id="uploadForm" method="post" enctype="multipart/form-data" style="display:none;">
+            <input type="file" id="uploadPhoto" name="uploadPhoto" v-on:change="selectFile"/>
+        </form>
+        <div class="uinn-at1" style="margin: 10px 20px;">
+            <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="takePhoto">拍照</div>
+        </div>
+        <div class="uinn-at1" style="margin: 10px 20px;">
+            <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="uploadPic">上传图片</div>
+        </div>
+        <div class="uinn-at1" style="margin: 10px 20px;">
+            <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="finished">完成</div>
+        </div>
+        <div class="uinn-at1" style="margin: 10px 20px;">
+            <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="cancel">取消</div>
+        </div>
+        </div>
+        </div>
         </div>
         <script src="../../js/appcan.js"></script>
         <script src="../../js/appcan.control.js"></script>
         <script src="../../js/appcan.scrollbox.js"></script>
         <script src="../../js/template.import.js"></script>
-		<script src="../../js/appcan.listview.js"></script>
-		<script src="../../js/appcan.optionList.js"></script>
-		<script src="../../js/appcan.slider.js"></script>
-		<script src="../../js/appcan.tab.js"></script>
-		<script src="../../js/appcan.treeview.js"></script>
-		<script src="../../js/vue/vue.js"></script>
-		<script src="../../js/common.js"></script>
+        <script src="../../js/appcan.listview.js"></script>
+        <script src="../../js/appcan.optionList.js"></script>
+        <script src="../../js/appcan.slider.js"></script>
+        <script src="../../js/appcan.tab.js"></script>
+        <script src="../../js/appcan.treeview.js"></script>
+        <script src="../../js/vue/vue.js"></script>
+        <script src="../../js/common.js"></script>
         <script src="js/zcck_receive.js"></script>
     </body>
 </html>
