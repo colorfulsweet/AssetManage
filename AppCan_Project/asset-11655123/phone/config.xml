@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <widget appId="11655123" channelCode="0000" height="480" pid="" sreensize="4.5" version="00.00.0000" viewmode="application" widgetId="" width="320">
-    <name>asset</name>
+    <name>资产管理</name>
     <description/>
     <author email=""/>
     <icon src="icon.png"/>

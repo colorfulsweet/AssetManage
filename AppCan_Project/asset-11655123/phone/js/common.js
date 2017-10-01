@@ -1,7 +1,8 @@
 (function(){
     //页面当中的公共变量 方法等
     var SysFunction = function() {
-        this.rootPath = "http://123.232.10.234:8150";
+        //this.rootPath = "http://123.232.10.234:8150";
+        this.rootPath = "http://192.168.31.137:9000";
         this.contextPath = "/";
     };
     

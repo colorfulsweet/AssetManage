@@ -66,7 +66,12 @@
                 <div class="ub-f1 ub-con ub-ac ub-pc ub">{{countData.photoNum}}</div>
             </div>
         </div>
-        
+        <div class=" uinn uinn-at1">
+            <div class="button ub ub-ac bc-text-head ub-pc bc-btn"  v-on:click="backToIndex">确认</div>
+        </div>
+        <div class=" uinn uinn-at1">
+            <div class="button ub ub-ac bc-text-head ub-pc bc-btn"  v-on:click="backToIndex">返回首页</div>
+        </div>
         </div>
         </div>
         </div>
@@ -100,6 +105,14 @@ var vm = new Vue({
                 vm.$data.countData = res.data;
             }
         });
+    },
+    methods : {
+        backToIndex : function(){
+            //返回首页
+            appcan.openWinWithUrl('index', '../index.html');
+            uexWindow.close();
+        }
+        
     }
 });
 });

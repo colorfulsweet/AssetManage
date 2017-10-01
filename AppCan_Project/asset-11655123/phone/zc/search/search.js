@@ -60,7 +60,13 @@ appcan.ready(function() {
                 } else {
                     //不是第一次添加
                     oldList = JSON.parse(oldList);
-                    appcan.locStorage.setVal("selectedIds", JSON.stringify(selectedIds.concat(oldList)));
+                    for(let index in selectedIds) {
+                        if(oldList.findIndex(function(item){return item===selectedIds[index]}) == -1) {
+                            //现有列表中没有该ID
+                            oldList.push(selectedIds[index]);
+                        }
+                    }
+                    appcan.locStorage.setVal("selectedIds", JSON.stringify(oldList));
                 }
                 appcan.window.openToast('添加成功', '2000');
             },

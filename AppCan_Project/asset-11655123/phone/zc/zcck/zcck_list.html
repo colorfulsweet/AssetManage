@@ -34,19 +34,27 @@
       <div class="bounce_status">更新中......</div>
     </div>
         <div class="ub ub-hor ub-f1 ulev-1 uinn ub-ac c-gra1 txtcolor">
-            <div class="ub-f1 ub-con ub-ac ub-pc ub">
-                序号
-            </div>
+            <div class="ub-f1 ub-con ub-ac ub-pc ub">序号</div>
             <div class="umw1"></div>
-            <div class="ub-f1 ub-con ub-ac ub-pc ub">
-                ID
-            </div>
+            <div class="ub-f1 ub-con ub-ac ub-pc ub">ID</div>
+            <div class="umw1"></div>
+            <div class="ub-f1 ub-con ub-ac ub-pc ub">名称</div>
+            <div class="umw1"></div>
+            <div class="ub-f1 ub-con ub-ac ub-pc ub">数量</div>
+            <div class="umw1"></div>
+            <div class="ub-f1 ub-con ub-ac ub-pc ub">单位</div>
         </div>
         <div>
             <div class="ub ub-hor ub-f1 ulev-1 uinn ub-ac umh4" v-for="(item,index) in zcList" >
                 <div class="ub-f1 ub-con ub-ac ub-pc ub">{{index+1}}</div>
                 <div class="umw1"></div>
-                <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item}}</div>
+                <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.uuid}}</div>
+                <div class="umw1"></div>
+                <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.mingch}}</div>
+                <div class="umw1"></div>
+                <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.shul}}</div>
+                <div class="umw1"></div>
+                <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.danwei}}</div>
             </div>
         </div>
         <div class="uinn uinn-at1">

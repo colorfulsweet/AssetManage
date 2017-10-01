@@ -1,100 +1,39 @@
-(function($) {
-    appcan.button("#nav-left", "btn-act",
-    function() {});
-    appcan.button("#nav-right", "btn-act",
-    function() {});
-    
-    appcan.button("#btn", "btn-act",function() {
-        search();
-    });
-    
-    function search(){
-        var orderno = $("#orderno").val();
-        var asname = $("#asname").val();
-        var astype = $("#astype").val();
-        if (orderno == "" || orderno == null) {
-            appcan.window.openToast('编码不能为空', '2000');
-            $("#orderno").focus();
-            return;
-        } else if (asname == "") {
-            appcan.window.openToast('请选择名称', '2000');
-            return;
-        }else if (astype == "") {
-            appcan.window.openToast('请选择类型', '2000');
-            return;
-        } else {
-            $("form").submit();
-        }
-
-    }
-
-    $("form").on('button',function(){
-        var orderno = $("#orderno").val();
-        var asname = $("#asname").val();
-        var astype = $("#astype").val();
-        var info = {
-            'orderno':orderno,
-            'asname':asname,
-            'astype':astype,
-        }
-        
-        appcan.request.ajax({
-            url : 'http://192.168.21.81:8080/book1/asset.do?action=assetifQuery',
-            type : 'post',
-            datatype : 'json',
-            data : {
-                "assetifQuery" : "assetifQuery",
-                "info" : info
+appcan.ready(function(){
+   var vm = new Vue({
+        el : "#Page",
+        data : {
+            name_index : null,
+            type_index : null,
+            //这部分数据可以从后端获取
+            names : ["办公家具", "打印机", "摄像机", "投影仪"],
+            types : ["办公设施及用品", "生活设施及用品", "临建设施物资" ,"工具化临时设施", "CT物资", "安全文明施工设施",
+            "安全劳保", "仪器仪表", "机械设备", "工具用具", "自购周转料具", "功能车辆"]
+        },
+        methods : {
+            search : function() {
+                var orderno = $("#orderno").val();
+                var name = vm.$data.name_index;
+                var type = vm.$data.type_index;
+                 
+                if(!orderno && name==null && type==null) {
+                   appcan.window.openToast('请输入查询条件', '2000');
+                   return;
+                }
+                var search = {
+                   'zcID':orderno,
+                   'mingch':name!=null ? vm.$data.names[name] : "",
+                   'lbie' : type!=null ? vm.$data.types[type] : ""
+                }
+                appcan.locStorage.setVal("operate", "1"); //operate表示操作类型, 1代表出库
+                appcan.locStorage.setVal("search",JSON.stringify(search));
+                appcan.openWinWithUrl('search', 'search.html');
             },
-            
-            success : function(data){
-                // appcan.alert("data = "+data);
-                appcan.openWinWithUrl('index', 'index.html');
-                            //页面跳转     
-            },error : function(error){
-                appcan.alert({
-                        title : "提示",
-                        content : "网络繁忙，请稍候再试！",
-                        buttons : ['确定'],
-                        
-                    })
+            backView:function() {
+                uexWindow.windowBack(); //退回上一个视图
             }
-            
-        })
-        
-    })
-    
-    var tabview_Tab = appcan.tab({
-        selector: $("#Tab"),
-        hasIcon: true,
-        hasAnim: false,
-        hasLabel: true,
-        hasBadge: false,
-        index: 0,
-        data : [{
-            label : "首　页",
-            icon : "fa-home"
-        }, {
-            label : "　我　",
-            icon : "fa-user"
-        }]
+        }
     });
-
-	appcan.ready(function() {
-        })
-        var tabview = appcan.tab({
-            selector : "#tabview",
-            hasIcon : false,
-            hasAnim : true,
-            hasLabel : true,
-            hasBadge : false,
-            data : [{
-                label : "预先准备",
-            }, {
-                label : "空中实施",
-            }]
-        });
-        tabview.on("click", function(obj, index) {
-            appcan.openWinWithUrl('index','index.html');
-        })
-})($);
+    appcan.select(".select", function(ele, value){
+        
+    });
+});

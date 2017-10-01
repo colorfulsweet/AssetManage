@@ -6,9 +6,23 @@ var vm = new Vue({
     },
     created : function() {
         var jsonStr = appcan.locStorage.getVal("selectedIds");
-        if(jsonStr) {
-            this.zcList = JSON.parse(jsonStr);
+        if(!jsonStr) {
+            return;
         }
+        var zcIds = JSON.parse(jsonStr);
+       // ----TEST----
+       //var zcIds = ["5105", "5106", "5107"];
+       // ------------
+        var vm = this;
+        appcan.ajax({
+            url : sys_common.rootPath + sys_common.contextPath + "zichan/list",
+            data : {uuids : zcIds.join(",")},
+            type : "GET",
+            dataType : "json",
+            success : function(res){
+                vm.zcList = res;
+            }
+        });
     },
     methods : {
         /**
