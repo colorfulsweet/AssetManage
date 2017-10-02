@@ -22,7 +22,7 @@ appcan.ready(function() {
             });
         },
         data : {
-            resultList : null
+            resultList : []
         },
         methods : {
             /**
@@ -60,7 +60,7 @@ appcan.ready(function() {
                 } else {
                     //不是第一次添加
                     oldList = JSON.parse(oldList);
-                    for(let index in selectedIds) {
+                    for(var index in selectedIds) {
                         if(oldList.findIndex(function(item){return item===selectedIds[index]}) == -1) {
                             //现有列表中没有该ID
                             oldList.push(selectedIds[index]);

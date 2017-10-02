@@ -143,7 +143,9 @@
 	background-position:center;
 }
 /*----- new -----*/
-div#ScrollContent {
+#ScrollContent {
     padding-top:3em;
 }
-
+#Header {
+    color:rgba(255,255,255,1);
+}
