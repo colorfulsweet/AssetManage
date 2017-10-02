@@ -3,7 +3,7 @@
     <head>
         <title></title>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
         <link rel="stylesheet" href="../../css/fonts/font-awesome.min.css">
         <link rel="stylesheet" href="../../css/ui-box.css">
         <link rel="stylesheet" href="../../css/ui-base.css">
@@ -12,8 +12,6 @@
         <link rel="stylesheet" href="../../css/appcan.control.css">
         <style>
         .img-preview {
-            height:100px;
-            width:100px;
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center center;
@@ -55,7 +53,7 @@
                 照片
             </div>
         </div>
-        <div>
+        <div id="tableBody">
             <div class="ub ub-hor ub-f1 ulev-1 uinn ub-ac umh4" v-for="(item,index) in zcList" v-on:click="trSelect(item,index)" >
                 <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.zcid}}</div>
                 <div class="umw1"></div>

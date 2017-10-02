@@ -16,7 +16,7 @@ var vm = new Vue({
         }
         //*/
         // ----TEST----
-        //var jsonStr = '{"operateId":"4c3fc663-2b9d-4044-8fe8-6a6c3d279916","operateType":"1"}';
+        //var jsonStr = '{"operateId":"55f4f7a8-0b8b-439d-97e0-a78c16392b65","operateType":"1"}';
         // ------------
         var operateId = JSON.parse(jsonStr).operateId;
         appcan.locStorage.setVal("operateId", operateId);
@@ -117,8 +117,12 @@ var vm = new Vue({
             reader.onload = function(e) {//生成图片预览
                 var data = e.target.result;
                 // base64编码
-                var img_preview = $(".table-striped tbody tr").find(".img-preview").eq(vm.selectItemIndex);
-                img_preview.css("background-image", 'url(' + data + ')');
+                var img_preview = $("#tableBody > div .img-preview").eq(vm.selectItemIndex);
+                img_preview.css({
+                    "background-image":'url(' + data + ')',
+                    "width" : "100px",
+                    "height" : "100px"
+                });
                 // vm.zcList[vm.selectItemIndex].imageSrc = 'url(' + data + ')';
             };
             // 以DataURL的形式读取文件:
@@ -145,7 +149,6 @@ var vm = new Vue({
          */
         finished : function() {
             //跳转至接收方确认页面
-            
             appcan.openWinWithUrl('zcck_confirm','zcck_confirm.html');
         },
         /**

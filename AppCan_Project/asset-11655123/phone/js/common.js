@@ -5,11 +5,13 @@
         this.rootPath = "http://192.168.31.137:9000";
         this.contextPath = "/";
     };
-    
+    /*
+     //url传递查询参数在手机端运行时无效
     SysFunction.prototype.getQueryString = function(name) {
          var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
          var r = window.location.search.substr(1).match(reg);
          if(r!=null)return  unescape(r[2]); return null;
     };
+    */
     window.sys_common = new SysFunction();
 })();

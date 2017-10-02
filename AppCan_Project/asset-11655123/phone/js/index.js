@@ -93,6 +93,7 @@ var vm = new Vue({
         qrcodeScan : function() {
             uexScanner.open(function(err, data){
                 //包含type :"QR_CODE" ,code:扫描到的内容
+                data.code = data.code.replace(/\\/g,"");
                 var content = JSON.parse(data.code);
                 if("operateType" in content && "operateId" in content) {
                     //将扫描获得的信息放在前端缓存
