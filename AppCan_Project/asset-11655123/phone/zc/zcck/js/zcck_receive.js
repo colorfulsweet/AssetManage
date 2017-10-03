@@ -8,13 +8,11 @@ var vm = new Vue({
     },
     created : function() {
         //二维码信息中包含 operateType 和 operateId
-        ///*
         var jsonStr = appcan.locStorage.getVal("QrcodeContent");
         appcan.locStorage.remove("QrcodeContent");
         if(!jsonStr) {
             return;
         }
-        //*/
         // ----TEST----
         //var jsonStr = '{"operateId":"55f4f7a8-0b8b-439d-97e0-a78c16392b65","operateType":"1"}';
         // ------------
@@ -62,7 +60,7 @@ var vm = new Vue({
                 uexUploaderMgr.setHeaders(uploader, JSON.stringify(headJson));
                 
                 //执行文件上传
-                uexUploaderMgr.uploadFile(uploader, picPath, "uploadPhoto", 2, 700,function(packageSize, percent, responseString, status){
+                uexUploaderMgr.uploadFile(uploader, "file://" + picPath, "uploadPhoto", 2, 700,function(packageSize, percent, responseString, status){
                     switch (status) {
                     case 0: //上传中
                         //document.getElementById('percentage').innerHTML = "上传包大小:"+packageSize+"<br>上传进度:"+percent+"%";
@@ -96,14 +94,15 @@ var vm = new Vue({
          * 选择文件之后的回调函数
          */
         selectFile : function() {
+            var vm = this;
             var fileInput = event.target;
-            // 检查文件是否选择:
             if (!fileInput.value) {
+                // 检查文件是否选择
                 return;
             }
-            // 获取File引用:
             var file = fileInput.files[0];
-            if (file.type !== 'image/jpeg' && file.type !== 'image/png' && file.type !== 'image/gif') {
+            var imageType = /image.*/;
+            if (!file.type.match(imageType)) {
                 appcan.alert({
                     title : "提示",
                     content : "不是有效的图片文件!",
@@ -111,36 +110,55 @@ var vm = new Vue({
                 });
                 return;
             }
-            // 读取文件:
-            var reader = new FileReader();
-            var vm = this;
-            reader.onload = function(e) {//生成图片预览
-                var data = e.target.result;
-                // base64编码
-                var img_preview = $("#tableBody > div .img-preview").eq(vm.selectItemIndex);
-                img_preview.css({
-                    "background-image":'url(' + data + ')',
-                    "width" : "100px",
-                    "height" : "100px"
+            if(file.size > sys_common.maxFileSize) {
+                appcan.alert({
+                    title : "提示",
+                    content : "请勿选择超过5MB的图片!",
+                    buttons : ['确定'],
                 });
-                // vm.zcList[vm.selectItemIndex].imageSrc = 'url(' + data + ')';
-            };
-            // 以DataURL的形式读取文件:
-            reader.readAsDataURL(file);
+                return;
+            }
+            //==== FileReader加载图片预览在手机端易导致APP崩溃 ====
+            // // 读取文件:
+            // var reader = new FileReader();
+            // reader.onload = function(e) {//生成图片预览
+                // var img_preview = $("#tableBody > div .img-preview").eq(vm.selectItemIndex);
+                // img_preview.css({
+                    // "background-image" : "url("+e.target.result+")", // base64编码
+                    // "width" : "7em",
+                    // "height" : "7em"
+                // });
+            // };
+            // reader.readAsDataURL(file);
             var formData = new FormData(document.getElementById("uploadForm"));
             formData.append("operateId",appcan.locStorage.getVal("operateId"));
             formData.append("zcId",this.zcList[this.selectItemIndex].uuid);
-            appcan.ajax({
+            $.ajax({
                 url : sys_common.rootPath + sys_common.contextPath + "lz/uploadPhoto",
                 type : "POST",
                 data : formData,
                 processData : false,
                 contentType : false,
+                /*
                 success : function() {
                     appcan.window.openToast('文件上传成功', '2000');
                 },
                 error : function() {
                     appcan.window.openToast('文件上传失败', '2000');
+                },
+                */
+                complete : function(xhr, res) {
+                    var result = JSON.parse(xhr.responseText);
+                    appcan.window.openToast(result.msg, '2000');
+                    if(result.status && result.data) {
+                        var picUrl = sys_common.rootPath + sys_common.contextPath + result.data;
+                        var img_preview = $("#tableBody > div .img-preview").eq(vm.selectItemIndex);
+                        img_preview.css({
+                            "background-image" : "url("+picUrl+")", // base64编码
+                            "width" : "7em",
+                            "height" : "7em"
+                        });
+                    }
                 }
             });
         },

@@ -4,6 +4,8 @@
         //this.rootPath = "http://123.232.10.234:8150";
         this.rootPath = "http://192.168.31.137:9000";
         this.contextPath = "/";
+        //上传文件的最大大小
+        this.maxFileSize = 5 * 1024 * 1024; //5MB
     };
     /*
      //url传递查询参数在手机端运行时无效

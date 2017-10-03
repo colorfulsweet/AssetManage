@@ -47,18 +47,10 @@ var vm = new Vue({
             selectIndex : 0,
             items : [{
                 icon : "fa-home",
-                text : "首　页",
-                target : {
-                    index : "index",
-                    url : "index.html"
-                }
+                text : "首　页"
             },{
                 icon : "fa-user",
-                text : "　我　",
-                target : {
-                    index : "my",
-                    url : "my.html"
-                }
+                text : "　我　"
             }]
         }
     },
@@ -85,7 +77,9 @@ var vm = new Vue({
          * 打开新窗口 
          */
         openUrl : function(item) {
-            appcan.openWinWithUrl(item.id, item.url);
+            if(item.url) {
+                appcan.openWinWithUrl(item.id, item.url);
+            }
         },
         /**
          * 调用摄像头进行二维码扫描 
