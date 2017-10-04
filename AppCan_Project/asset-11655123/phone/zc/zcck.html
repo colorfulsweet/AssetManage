@@ -14,27 +14,18 @@
     </head>
     <body ontouchstart>
         <div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
-            <div class="uh bc-head  ubb bc-border" data-control="HEADER" id="Header">
-                <div class="ub">
-                    <div class="nav-btn" id="nav-left" v-on:click="backView">
-                        <div class="fa fa-1g ub-img1 fa-chevron-left"></div>
-                    </div>
-                    <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">出库流程</h1>
-                    <div class="nav-btn" id="nav-right">
-                        <div class="fa  fa-1g  ub-img1"></div>
-                    </div>
-                </div>
-            </div>
+            <header-component v-bind:title="'出库流程'" v-bind:hasbackbtn="true"></header-component>
             <div data-control="CONTENT" id="ScrollContent">
                 <div class="ub ub-ver">
                     <div id="Title">资产查询检索</div>
                     <div class="ub ub-ver ub-f1">
                    <form method="post">
+                       <input type="hidden" id="operateType" value="1" />
                         <ul  class=" ubb ub bc-border bc-text ub-ac uinn">
                             <li class="ub-f1 ut-s ulev-app1">编码</li>
                             <li class="tx-r t-blu ulev-app1 ub-ae">
                                 <div class="uinput uinn4">
-                                    <input placeholder="请输入编码" type="text" class="tx-r " name="orderno" id="orderno">
+                                    <input placeholder="请输入编码" type="text" class="tx-r " name="zcID" id="zcID">
                                 </div>
                             </li>
                         </ul>
@@ -90,8 +81,8 @@
 		<script src="../js/appcan.listview.js"></script>
 		<script src="../js/appcan.optionList.js"></script>
 		<script src="../js/appcan.slider.js"></script>
-		<script src="../js/common.js"></script>
         <script src="../js/vue/vue.js"></script>
+		<script src="../js/common.js"></script>
         <script src="js/zichan.js"></script>
     </body>
 </html>

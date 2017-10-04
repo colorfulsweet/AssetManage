@@ -13,25 +13,13 @@
     </head>
     <body ontouchstart>
         <div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
-            <div class="uh bc-head  ubb bc-border" data-control="HEADER" id="Header">
-                <div class="ub">
-                    <div class="nav-btn" id="nav-left">
-                        <div class="fa fa-1g ub-img1"></div>
-                    </div>
-                    <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">资产出库</h1>
-                    <div class="nav-btn" id="nav-right">
-                        <div class="fa  fa-1g  ub-img1"></div>
-                    </div>
-                </div>
-            </div>
+            <header-component v-bind:title="'资产' + operateList[operate-1]" v-bind:hasbackbtn="false">
+            </header-component>
             <div data-control="CONTENT" id="ScrollContent">
             <div class="scrollbox">
-                <div>请交接货物, 提交交接信息</div>
+                <div>操作成功, 点击"完成"返回首页</div>
                 <div class="uinn uinn-at1" >
-                    <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" id="submit">提交</div>
-                </div>
-                <div class="uinn uinn-at1" >
-                    <div class="button ub ub-ac bc-text-head ub-pc sc-btn uc-a1" id="cancel">取消</div>
+                    <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" id="submit">完成</div>
                 </div>
             </div>
             </div>
@@ -45,25 +33,30 @@
         <script src="../../js/appcan.slider.js"></script>
         <script src="../../js/appcan.tab.js"></script>
         <script src="../../js/appcan.treeview.js"></script>
+        <script src="../../js/vue/vue.js"></script>
         <script src="../../js/common.js"></script>
         <script>
-appcan.ready(function() {
-    var operateId = appcan.locStorage.getVal("operateId");
-    var userJson = appcan.locStorage.getVal("login_user");
-    var loginUser = null;
-    if(userJson) {
-        loginUser = JSON.parse(userJson);
+(function(){
+
+var vm = new Vue({
+    el : "#Page",
+    data : {
+        operate : appcan.locStorage.getVal("operate") || 1,
+        operateList : sys_common.operateList
+    },
+    mounted : function(){
+        appcan.locStorage.remove("operateId");
+        appcan.locStorage.remove("operate");
+    },
+    methods : {
+        finish : function(){
+            alert("操作成功");
+            appcan.openWinWithUrl('index','../../index.html');
+            uexWindow.close();
+        }
     }
-    $("#submit").on("click", function(){
-        appcan.ajax({
-            url : sys_common.rootPath + sys_common.contextPath + "lz/finished",
-            data : {operateId : operateId, bgrId: (loginUser ? loginUser.uuid : "")},
-            success : function(){
-                alert("操作成功");
-            }
-        });
-    });
 });
+})();
         </script>
     </body>
 </html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../css/ui-box.css">
+        <link rel="stylesheet" href="../../css/ui-base.css">
+        <link rel="stylesheet" href="../../css/ui-color.css">
+        <link rel="stylesheet" href="../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../css/appcan.control.css">
+    </head>
+    <body ontouchstart>
+        <div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
+            <header-component v-bind:title="operateList[operate-1].name + '清单'" v-bind:hasbackbtn="false">
+            </header-component>
+            <div data-control="CONTENT" id="ScrollContent">
+                <div class="scrollbox">
+                <div class="ub ub-hor ub-f1 ulev-1 uinn ub-ac c-gra1 txtcolor">
+                    <div class="ub-f1 ub-con ub-ac ub-pc ub">序号</div>
+                    <div class="umw1"></div>
+                    <div class="ub-f1 ub-con ub-ac ub-pc ub">ID</div>
+                    <div class="umw1"></div>
+                    <div class="ub-f1 ub-con ub-ac ub-pc ub">名称</div>
+                    <div class="umw1"></div>
+                    <div class="ub-f1 ub-con ub-ac ub-pc ub">数量</div>
+                    <div class="umw1"></div>
+                    <div class="ub-f1 ub-con ub-ac ub-pc ub">单位</div>
+                </div>
+                <div>
+                    <div class="ub ub-hor ub-f1 ulev-1 uinn ub-ac umh4" v-for="(item,index) in zcList" >
+                        <div class="ub-f1 ub-con ub-ac ub-pc ub">{{index+1}}</div>
+                        <div class="umw1"></div>
+                        <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.uuid}}</div>
+                        <div class="umw1"></div>
+                        <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.mingch}}</div>
+                        <div class="umw1"></div>
+                        <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.shul}}</div>
+                        <div class="umw1"></div>
+                        <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.danwei}}</div>
+                    </div>
+                </div>
+                <div class="uinn uinn-at1">
+                    <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="toQrcode">生成二维码</div>
+                </div>
+                <div class="uinn uinn-at1">
+                    <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="continueSearch" >继续检索添加</div>
+                </div>
+                <div class="uinn uinn-at1">
+                    <div class="button ub ub-ac bc-text-head ub-pc sc-btn uc-a1" >对方无法扫码</div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <script src="../../js/appcan.js"></script>
+        <script src="../../js/appcan.control.js"></script>
+        <script src="../../js/appcan.scrollbox.js"></script>
+        <script src="../../js/template.import.js"></script>
+        <script src="../../js/appcan.listview.js"></script>
+        <script src="../../js/appcan.optionList.js"></script>
+        <script src="../../js/appcan.slider.js"></script>
+        <script src="../../js/appcan.tab.js"></script>
+        <script src="../../js/appcan.treeview.js"></script>
+        <script src="../../js/vue/vue.js"></script>
+        <script src="../../js/common.js"></script>
+        <script src="js/zc_list.js"></script>
+    </body>
+</html>

@@ -2,7 +2,21 @@ appcan.ready(function() {
 var vm = new Vue({
     el : "#Page",
     data : {
-        zcList : []
+        zcList : [],
+        operateList : [{
+            name : "出库",
+            view : "../zcck.html",
+            viewIndex : "zcck"
+        },{
+            name : "流转",
+            view : "../zclz.html",
+            viewIndex : "zclz"
+        },{
+            name : "回收",
+            view : "../zccl.html",
+            viewIndex : "zccl"
+        }],
+        operate : appcan.locStorage.getVal("operate") || 1
     },
     created : function() {
         var jsonStr = appcan.locStorage.getVal("selectedIds");
@@ -46,7 +60,6 @@ var vm = new Vue({
                     operate : appcan.locStorage.getVal("operate")
                 },
                 success : function(res) {
-                    appcan.locStorage.remove("operate");
                     appcan.locStorage.remove("selectedIds"); //在缓存中移除选中的资产, 避免影响下次操作
                     
                     appcan.locStorage.setVal("operateId", res);
@@ -66,7 +79,8 @@ var vm = new Vue({
          * 继续检索添加
          */
         continueSearch : function() {
-            appcan.openWinWithUrl('zcck','../zcck.html');
+            appcan.openWinWithUrl(this.operateList[this.operate-1].viewIndex, 
+                                this.operateList[this.operate-1].view);
             uexWindow.close();//关闭当前视图
         }
     }

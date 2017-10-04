@@ -18,11 +18,13 @@ appcan.ready(function() {
                 data : search,
                 success : function(res) {
                     vm.$data.resultList = JSON.parse(res);
+                    vm.$data.tip = "没有符合条件的数据";
                 }
             });
         },
         data : {
-            resultList : []
+            resultList : [],
+            tip : "加载中......"
         },
         methods : {
             /**
@@ -74,7 +76,7 @@ appcan.ready(function() {
              * 查看清单
              */
             showList : function() {
-                appcan.openWinWithUrl('zcck_list','zcck/zcck_list.html');
+                appcan.openWinWithUrl('zcck_list','zcck/zc_list.html');
                 uexWindow.close();//关闭当前视图
             }
         }

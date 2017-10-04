@@ -11,20 +11,21 @@ appcan.ready(function(){
         },
         methods : {
             search : function() {
-                var orderno = $("#orderno").val();
+                var zcID = $("#zcID").val();
                 var name = vm.$data.name_index;
                 var type = vm.$data.type_index;
+                var operateType = $("#operateType").val();
                  
-                if(!orderno && name==null && type==null) {
+                if(!zcID && name==null && type==null) {
                    appcan.window.openToast('请输入查询条件', '2000');
                    return;
                 }
                 var search = {
-                   'zcID':orderno,
+                   'zcID':zcID,
                    'mingch':name!=null ? vm.$data.names[name] : "",
                    'lbie' : type!=null ? vm.$data.types[type] : ""
                 }
-                appcan.locStorage.setVal("operate", "1"); //operate表示操作类型, 1代表出库
+                appcan.locStorage.setVal("operate", operateType); //operate表示操作类型, 1出库 2流转 3回收
                 appcan.locStorage.setVal("search",JSON.stringify(search));
                 appcan.openWinWithUrl('search', 'search.html');
             },

@@ -10,7 +10,6 @@
         <link rel="stylesheet" href="../css/ui-color.css">
         <link rel="stylesheet" href="../css/appcan.icon.css">
         <link rel="stylesheet" href="../css/appcan.control.css">
-        <!-- <link rel="stylesheet" href="qrcode/css/qrcode.css"> -->
         <style>
         .qrcode-panel {margin-top:100px; text-align:center; width:100%;}
         .qrcode-panel > img {width : 60%; margin : 50px auto;}
@@ -18,32 +17,16 @@
     </head>
     <body ontouchstart>
         <div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
-            <div class="uh bc-head  ubb bc-border" data-control="HEADER" id="Header">
-                <div class="ub">
-                    <div class="nav-btn" id="nav-left">
-                        <div class="ub-img1 icon-left ulev2">
-                        </div>
-                    </div>
-                    <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">二维码信息</h1>
-                    <div class="nav-btn" id="nav-right">
-                        <div class="ub-img1 icon-more ulev2">
-                        </div>
-                    </div>
-                </div>
+            <header-component v-bind:title="'二维码信息'" v-bind:hasbackbtn="false">
+            </header-component>
+            <div class="bc-bg ub-ver ub-ac qrcode-panel" data-control="FLEXBOXVER" id="ContentFlexVer" >
+                <img id="qrcode_img" v-bind:src="imgSrc" v-bind:title="title"/>
             </div>
-        <div class="bc-bg ub-ver ub-ac qrcode-panel" data-control="FLEXBOXVER" id="ContentFlexVer" >
-            <img id="qrcode_img" src="../images/loading.gif" title="二维码图片"/>
-        </div>
         </div>
         <script src="../js/appcan.js"></script>
         <script src="../js/appcan.control.js"></script>
         <script src="../js/appcan.scrollbox.js"></script>
-        <script src="../js/template.import.js"></script>
-		<script src="../js/appcan.listview.js"></script>
-		<script src="../js/appcan.optionList.js"></script>
-		<script src="../js/appcan.slider.js"></script>
-		<script src="../js/appcan.tab.js"></script>
-		<script src="../js/appcan.treeview.js"></script>
+		<script src="../js/vue/vue.js"></script>
 		<script src="../js/common.js"></script>
         <script src="js/qrcode.js"></script>
     </body>

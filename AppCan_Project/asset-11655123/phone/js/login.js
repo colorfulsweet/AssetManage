@@ -1,24 +1,4 @@
-(function($) {
-    appcan.button("#nav-left", "btn-act",
-    function() {
-     window.history.go(-1);
-    });
-    appcan.button("#nav-right", "btn-act",
-    function() {});
-})($);
   appcan.ready(function() {
-      var userInfo = appcan.locStorage.getVal('userInfo');
-      var remUserInfo = appcan.locStorage.getVal('remUserInfo');
-      
-      if(remUserInfo == "true" && !!userInfo){
-          userInfo = eval('('+userInfo+')');
-          $("#rem").addClass('text-active');
-          $("#name").val(userInfo.name);
-          $("#pwd").val(userInfo.pwd);
-      }
-      appcan.button("#rem","btn-act",function(){
-         $(this).toggleClass('text-active'); 
-      });
     appcan.button("#submit", "ani-act", function() {
         var name = $("#name").val();
         var pwd = $("#pwd").val();

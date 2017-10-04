@@ -1,0 +1,12 @@
+<div data-component="user_info">
+    <div class="fa fa-user ub-img1" id="userInfo"></div>
+    <script>
+    (function($){
+        var loginUserStr = appcan.locStorage.getVal("login_user");
+        if(!loginUserStr) {
+            return;
+        }
+        $("#userInfo").text(JSON.parse(loginUserStr).user);
+    })($);
+    </script>
+</div>

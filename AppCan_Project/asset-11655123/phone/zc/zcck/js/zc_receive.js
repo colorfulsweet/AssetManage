@@ -4,25 +4,22 @@ var vm = new Vue({
     data : {
         zcList : [],
         selectItemIndex : null,
-        operateId : null
+        operateId : null,
+        operate : null,
+        operateList : sys_common.operateList,
+        from : undefined //该页面从哪个页面跳转而来
     },
     created : function() {
+        this.operateId = appcan.locStorage.getVal("operateId");
+        this.operate = appcan.locStorage.getVal("operate") || 1;
+        this.from = appcan.locStorage.getVal("from");
+        appcan.locStorage.remove("from");
         //二维码信息中包含 operateType 和 operateId
-        var jsonStr = appcan.locStorage.getVal("QrcodeContent");
-        appcan.locStorage.remove("QrcodeContent");
-        if(!jsonStr) {
-            return;
-        }
-        // ----TEST----
-        //var jsonStr = '{"operateId":"55f4f7a8-0b8b-439d-97e0-a78c16392b65","operateType":"1"}';
-        // ------------
-        var operateId = JSON.parse(jsonStr).operateId;
-        appcan.locStorage.setVal("operateId", operateId);
         appcan.ajax({
             type : "POST",
             url : sys_common.rootPath + sys_common.contextPath + "zichan/getByOperateId",
             data : {
-                operateId : operateId
+                operateId : this.operateId
             },
             success : function(res) {
                 if (Array.isArray(res)) {
@@ -131,8 +128,8 @@ var vm = new Vue({
             // };
             // reader.readAsDataURL(file);
             var formData = new FormData(document.getElementById("uploadForm"));
-            formData.append("operateId",appcan.locStorage.getVal("operateId"));
-            formData.append("zcId",this.zcList[this.selectItemIndex].uuid);
+            formData.append("operateId", this.operateId);
+            formData.append("zcId", this.zcList[this.selectItemIndex].uuid);
             $.ajax({
                 url : sys_common.rootPath + sys_common.contextPath + "lz/uploadPhoto",
                 type : "POST",
@@ -166,8 +163,15 @@ var vm = new Vue({
          * 完成
          */
         finished : function() {
-            //跳转至接收方确认页面
-            appcan.openWinWithUrl('zcck_confirm','zcck_confirm.html');
+            switch(this.from) {
+                case "index" : //跳转至接收方确认页面
+                    appcan.openWinWithUrl('zc_confirm','zc_confirm.html');
+                    break;
+                case "qrcode" : //跳转至发送方提示页面
+                    appcan.openWinWithUrl('zc_tip','zc_tip.html');
+                    break;
+            }
+            uexWindow.close();
         },
         /**
          * 取消

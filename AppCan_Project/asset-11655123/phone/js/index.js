@@ -1,5 +1,36 @@
 (function($) {
-
+/**
+ * 二维码扫描回调函数 
+ */
+var scannerCallback = function(err, data){
+    //包含type :"QR_CODE" ,code:扫描到的内容
+    data.code = data.code.replace(/\\/g,"");
+    var content = JSON.parse(data.code);
+    var login_user = JSON.parse(appcan.locStorage.getVal("login_user"));
+    
+    if("operateType" in content && "operateId" in content) {
+        //将扫描获得的信息放在前端缓存
+        appcan.locStorage.setVal("operateId", content.operateId);
+        appcan.locStorage.setVal("operate", content.operateType);
+        appcan.locStorage.setVal("from", "index");
+        switch (content.operateType) {
+            case "1" : //出库
+                if(login_user.roles.findIndex(function(item){return item === "MA"}) !== -1) {
+                    appcan.openWinWithUrl('zcck_receive','zc/zcck/zc_receive.html');
+                } else if(login_user.roles.findIndex(function(item){return item === "MK"}) !== -1) {
+                    appcan.openWinWithUrl('zc_confirm','zc/zcck/zc_confirm.html');
+                } else {
+                    appcan.window.openToast('无操作权限', '2000');
+                }
+                break;
+            case "2" : break;//流转
+            case "3" : break;//回收
+        }
+        
+    } else {
+        appcan.window.openToast('无效内容', '2000');
+    }
+}
 var vm = new Vue({
     el : "#Page",
     data : {
@@ -85,18 +116,7 @@ var vm = new Vue({
          * 调用摄像头进行二维码扫描 
          */
         qrcodeScan : function() {
-            uexScanner.open(function(err, data){
-                //包含type :"QR_CODE" ,code:扫描到的内容
-                data.code = data.code.replace(/\\/g,"");
-                var content = JSON.parse(data.code);
-                if("operateType" in content && "operateId" in content) {
-                    //将扫描获得的信息放在前端缓存
-                    appcan.locStorage.setVal("QrcodeContent", data.code);
-                    appcan.openWinWithUrl('zcck_receive','zc/zcck/zcck_receive.html');
-                } else {
-                    appcan.window.openToast('无效内容', '2000');
-                }
-            });
+            uexScanner.open(scannerCallback);
         }
     }
     
