@@ -149,3 +149,6 @@
 #Header {
     color:rgba(255,255,255,1);
 }
+.table-head .ub-con {
+    border-bottom: 0.15em solid #007DB8;
+}

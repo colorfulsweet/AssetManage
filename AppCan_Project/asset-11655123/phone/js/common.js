@@ -37,11 +37,11 @@
                             "<div class='nav-btn' id='nav-left' >"+
                                 "<div class='fa fa-1g ub-img1 fa-chevron-left' v-if='hasbackbtn' v-on:click='closeView'></div>"+
                             "</div>"+
-                        "<h1 class='ut ub-f1 ulev-3 ut-s tx-c' >{{title}}</h1>"+
-                        "<div class='nav-btn' id='nav-right'>"+
-                            "<div class='fa fa-user ub-img1' >{{username}}</div>"+
-                        "</div>"+
-                    "</div></div>",
+                            "<h1 class='ut ub-f1 ulev-3 ut-s tx-c' >{{title}}</h1>"+
+                            "<div class='nav-btn' id='nav-right'>"+
+                                "<div class='fa fa-user ub-img1' >{{username}}</div>"+
+                            "</div>"+
+                        "</div></div>",
         data : function() {
             return {username : loginUsername};
         },

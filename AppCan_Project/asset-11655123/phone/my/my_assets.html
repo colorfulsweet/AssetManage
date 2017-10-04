@@ -4,20 +4,21 @@
         <title></title>
         <meta charset="utf-8">
         <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-        <link rel="stylesheet" href="../../css/fonts/font-awesome.min.css">
-        <link rel="stylesheet" href="../../css/ui-box.css">
-        <link rel="stylesheet" href="../../css/ui-base.css">
-        <link rel="stylesheet" href="../../css/ui-color.css">
-        <link rel="stylesheet" href="../../css/appcan.icon.css">
-        <link rel="stylesheet" href="../../css/appcan.control.css">
+        <link rel="stylesheet" href="../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../css/ui-box.css">
+        <link rel="stylesheet" href="../css/ui-base.css">
+        <link rel="stylesheet" href="../css/ui-color.css">
+        <link rel="stylesheet" href="../css/appcan.icon.css">
+        <link rel="stylesheet" href="../css/appcan.control.css">
     </head>
     <body ontouchstart>
         <div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
-            <header-component v-bind:title="operateList[operate-1].name + '清单'" v-bind:hasbackbtn="false">
+            <header-component v-bind:title="'当前资产'" v-bind:hasbackbtn="true">
             </header-component>
+            
             <div data-control="CONTENT" id="ScrollContent">
-                <div class="scrollbox">
-                <div class="ub uinn c-gra1 table-head">
+            <div class="scrollbox">
+                 <div class="ub uinn c-gra1 table-head">
                     <div class="ub-f1 ub-con ub-pc ub">序号</div>
                     <div class="umw1"></div>
                     <div class="ub-f1 ub-con ub-pc ub">ID</div>
@@ -42,22 +43,53 @@
                     </div>
                 </div>
                 <div class="uinn uinn-at1">
-                    <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="toQrcode">生成二维码</div>
-                </div>
-                <div class="uinn uinn-at1">
-                    <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="continueSearch" >继续检索添加</div>
-                </div>
-                <div class="uinn uinn-at1">
-                    <div class="button ub ub-ac bc-text-head ub-pc sc-btn uc-a1" >对方无法扫码</div>
-                </div>
+                    <div class="button ub ub-ac bc-text-head ub-pc sc-btn uc-a1" v-on:click="closeView" >取消</div>
                 </div>
             </div>
         </div>
-        <script src="../../js/appcan.js"></script>
-        <script src="../../js/appcan.control.js"></script>
-        <script src="../../js/template.import.js"></script>
-        <script src="../../js/vue/vue.js"></script>
-        <script src="../../js/common.js"></script>
-        <script src="js/zc_list.js"></script>
+        </div>
+        <script src="../js/appcan.js"></script>
+        <script src="../js/appcan.control.js"></script>
+        <script src="../js/template.import.js"></script>
+        <script src="../js/vue/vue.js"></script>
+        <script src="../js/common.js"></script>
+        <script>
+(function(){
+var vm = new Vue({
+    el :"#Page",
+    data : {
+        zcList :[]
+    },
+    created : function(){
+        var loginUserStr = appcan.locStorage.getVal("login_user");
+        if(!loginUserStr) {
+            return;
+        }
+        var vm = this;
+        appcan.ajax({
+            url : sys_common.rootPath + sys_common.contextPath + "zichan/findByBgrId",
+            type : "GET",
+            dataType : "json",
+            data : {
+                bgrId : JSON.parse(loginUserStr).uuid
+            },
+            success : function(res) {
+                if(Array.isArray(res)) {
+                    vm.zcList = res;
+                } else {
+                    vm.zcList = JSON.parse(res);
+                }
+            }
+        });
+    },
+    methods : {
+        closeView : function(){
+            uexWindow.close();
+        }
+    }
+});
+
+})();
+        </script>
     </body>
 </html>

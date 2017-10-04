@@ -23,7 +23,9 @@ var scannerCallback = function(err, data){
                     appcan.window.openToast('无操作权限', '2000');
                 }
                 break;
-            case "2" : break;//流转
+            case "2" : //流转
+                appcan.openWinWithUrl('zcck_receive','zc/zcck/zc_receive.html');
+                break;
             case "3" : break;//回收
         }
         
