@@ -29,7 +29,6 @@
         </div>
         <script src="../../js/appcan.js"></script>
         <script src="../../js/appcan.control.js"></script>
-        <script src="../../js/template.import.js"></script>
         <script src="../../js/vue/vue.js"></script>
         <script src="../../js/common.js"></script>
         <script>
@@ -50,7 +49,11 @@ var vm = new Vue({
             }
             appcan.ajax({
                 url : sys_common.rootPath + sys_common.contextPath + "lz/finished",
-                data : {operateId : this.operateId, bgrId: (loginUser ? loginUser.uuid : "")},
+                data : {
+                    operateId : this.operateId, 
+                    operate : this.operate,
+                    bgrId: (loginUser ? loginUser.uuid : "")
+                },
                 success : function(){
                     alert("操作成功");
                 }
