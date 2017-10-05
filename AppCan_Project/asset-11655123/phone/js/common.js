@@ -31,7 +31,18 @@
     }
     //全局定义页头组件
     Vue.component("header-component",{
-        props : ["title", "hasbackbtn"],
+        //组件参数及类型校验
+        props : {
+            title : { //页头标题文字
+                type : String,
+                required : true
+            },
+            hasbackbtn : { //左上角是否有返回按钮
+                type : Boolean,
+                default : true
+            }
+        },
+        //组件模板
         template : "<div class='uh bc-head ubb bc-border' data-control='HEADER' id='Header'>"+
                         "<div class='ub'>"+
                             "<div class='nav-btn' id='nav-left' >"+

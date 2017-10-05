@@ -23,11 +23,15 @@
                     <ul>
                         <li class="ubb ub bc-border bc-text ub-ac lis" v-bind:id="item.id" 
                                 v-bind:data-index="index" v-for="(item,index) in menus[tabs.selectIndex]"
+                                v-if="!loginUser || !item.roles || existsSameValues(item.roles, loginUser.roles)"
                                 v-on:click="menuClick(item)" >
                             <div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">{{item.name}}</div>
                             <div class="fa fa-angle-right ulev2 sc-text"></div>
                         </li>
                     </ul>
+                </div>
+                <div class="uinn uinn-at1" v-if="tabs.selectIndex == 1">
+                    <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="logout">退出登录</div>
                 </div>
             </div>
             

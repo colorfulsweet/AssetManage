@@ -30,8 +30,8 @@
                     appcan.window.openToast('登陆成功', '2000');
                     appcan.locStorage.setVal("login_user", JSON.stringify(res.data));
                     var timer = setTimeout(function() {
-                        appcan.openWinWithUrl('index', 'index.html');
-                        //页面跳转
+                        uexWindow.close();
+                        appcan.openWinWithUrl('index', 'index.html');//页面跳转
                     }, 2000);
                 }else {
                     appcan.window.openToast(res.msg, '2000');
