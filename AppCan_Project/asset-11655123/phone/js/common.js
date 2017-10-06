@@ -12,42 +12,83 @@
         this.maxFileSize = 5 * 1024 * 1024; //5MB
     };
     SysFunction.prototype.operateList = ["出库", "流转", "回收"];
+    
+    var loading = null;
+    $(function(){
+       loading = $("#loading-container");
+    });
+    /**
+     * 隐藏加载提示框 
+     */
+    var hideLoading = function() {
+        if(!loading.size()) {
+            loading = $("#loading-container");
+        }
+        loading.hide();
+    };
+    /**
+     * 默认的error回调函数 
+     */
+    var defaultErrorCallback = function() {
+        hideLoading();
+        appcan.alert({
+            title : "提示",
+            content : "网络繁忙，请稍候再试！",
+            buttons : ['确定']
+        });
+    };
     /** 
      * appcan.ajax方法代理<br>
      * 在ajax请求当中添加token数据用于后端认证 <br>
-     * 并且对success方法的传参进行包装
+     * 并且对success方法与error方法进行包装
      * 
      */
-    SysFunction.prototype.ajax = function(config, notAddToken) {
+    SysFunction.prototype.ajax = function(config, context) {
+        if(!loading.size()) {
+            loading = $("#loading-container");
+        }
+        loading.show();
+        context = context || appcan;
+        
         if(typeof config.success === "function") {
-            var oldFunc = config.success;
+            var successCallback = config.success;
             config.success = function(resJson) {
                 if(typeof resJson === "string") {
-                    try {
-                        arguments[0] = JSON.parse(resJson);
+                    try { //回传的数据如果不是JSON格式, 这一步有可能报错
+                    arguments[0] = JSON.parse(resJson);
+                    if(arguments[0].status === -1) { //未登录
+                        appcan.alert({
+                            title : "提示",
+                            content : "请登录后再执行该操作",
+                            buttons : ['确定']
+                        });
+                        hideLoading();
+                        return;
+                    }
                     } catch(e){}
                 }
-                if(arguments[0].status === -1) { //未登录
-                    appcan.alert({
-                        title : "提示",
-                        content : "请登录后再执行该操作",
-                        buttons : ['确定']
-                    });
-                }
-                oldFunc.apply(null, Array.prototype.slice.call(arguments));
+                hideLoading();
+                successCallback.apply(null, Array.prototype.slice.call(arguments));
             }
+        } else {
+            config.success = hideLoading;
         }
-        
-        if(notAddToken) {
-            return appcan.ajax(config);
+        if(typeof config.error === "function") {
+            config.error = function(){
+                defaultErrorCallback();
+                errorCallback.apply(null, Array.prototype.slice.call(arguments));
+            }
+        } else {
+            config.error = defaultErrorCallback;
         }
         var loginUserStr = appcan.locStorage.getVal("login_user");
         var loginUser = null;
         if(loginUserStr) {
             loginUser = JSON.parse(loginUserStr);
         } else {
-            return appcan.ajax(config);
+            return context.ajax(config);
         }
+        
         if(config.data instanceof FormData) {
             //文件上传
             config.data.append("_token", loginUser.token);
@@ -73,16 +114,8 @@
             }
         }
         
-        return appcan.ajax(config);
+        return context.ajax(config);
     }
-    /*
-     //url传递查询参数在手机端运行时无效
-    SysFunction.prototype.getQueryString = function(name) {
-         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-         var r = window.location.search.substr(1).match(reg);
-         if(r!=null)return  unescape(r[2]); return null;
-    };
-    */
     window.sys_common = new SysFunction();
     /**
      * 绑定页面标题组件 
@@ -113,7 +146,7 @@
                             "</div>"+
                             "<h1 class='ut ub-f1 ulev-3 ut-s tx-c' >{{title}}</h1>"+
                             "<div class='nav-btn' id='nav-right'>"+
-                                "<div class='fa fa-user ub-img1' >{{username}}</div>"+
+                                "<div class='fa fa-user ub-img1' v-if='username' >{{username}}</div>"+
                             "</div>"+
                         "</div></div>",
         data : function() {
@@ -125,5 +158,19 @@
                 uexWindow.close();
             }
         }
+    });
+    /**
+     * 正在加载 遮罩层 组件
+     */
+    Vue.component("loading-component", {
+        props : {
+            text : {
+                type : String,
+                default : "正在加载..."
+            }
+        },
+        template : "<div id='loading-container'>" + 
+                       "<div class='loader' :data-text='text' data-half ></div>" +
+                   "</div>"
     });
 })();

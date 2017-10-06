@@ -4,16 +4,16 @@ var vm = new Vue({
     data : {
         zcList : [],
         selectItemIndex : null,
-        operateId : null,
-        operate : null,
+        operateId : appcan.locStorage.getVal("operateId") || "123",
+        operate : appcan.locStorage.getVal("operate") || 1,
         operateList : sys_common.operateList,
-        from : undefined //该页面从哪个页面跳转而来
+        from : appcan.locStorage.getVal("from") //该页面从哪个页面跳转而来
     },
-    created : function() {
-        this.operateId = appcan.locStorage.getVal("operateId");
-        this.operate = appcan.locStorage.getVal("operate") || 1;
-        this.from = appcan.locStorage.getVal("from");
+    mounted : function() {
         appcan.locStorage.remove("from");
+        if(!this.operateId) {
+            return;
+        }
         //二维码信息中包含 operateType 和 operateId
         sys_common.ajax({
             type : "POST",
@@ -126,7 +126,7 @@ var vm = new Vue({
             var formData = new FormData(document.getElementById("uploadForm"));
             formData.append("operateId", this.operateId);
             formData.append("zcId", this.zcList[this.selectItemIndex].uuid);
-            $.ajax({
+            sys_common.ajax({
                 url : sys_common.rootPath + sys_common.contextPath + "lz/uploadPhoto",
                 type : "POST",
                 data : formData,
@@ -153,7 +153,7 @@ var vm = new Vue({
                         });
                     }
                 }
-            });
+            }, $);
         },
         /**
          * 完成

@@ -1,4 +1,29 @@
 appcan.ready(function() {
+var login_user = appcan.locStorage.getVal("login_user");
+/**
+ * 保存流转信息
+ * @param {function} callback 保存完成之后的回调函数(可以执行页面跳转) 
+ */
+var saveLzxx = function(callback) {
+    sys_common.ajax({
+        url : sys_common.rootPath + sys_common.contextPath + "lz/save",
+        type : "POST",
+        async : true,
+        data : {
+            bgrId : JSON.parse(login_user).uuid,
+            selectedIds : appcan.locStorage.getVal("selectedIds"),
+            operate : appcan.locStorage.getVal("operate")
+        },
+        success : function(res) {
+            appcan.locStorage.remove("selectedIds"); //在缓存中移除选中的资产, 避免影响下次操作
+            
+            appcan.locStorage.setVal("operateId", res);
+            if(typeof callback === "function") {
+                callback.call(null);
+            }
+        }
+    });
+}
 var vm = new Vue({
     el : "#Page",
     data : {
@@ -19,7 +44,7 @@ var vm = new Vue({
         operate : appcan.locStorage.getVal("operate") || 1,
         tip : "加载中......"
     },
-    created : function() {
+    mounted : function() {
         var jsonStr = appcan.locStorage.getVal("selectedIds");
         if(!jsonStr) {
             return;
@@ -45,37 +70,10 @@ var vm = new Vue({
          * 跳转到生成二维码的界面
          */
         toQrcode : function() {
-            var login_user = appcan.locStorage.getVal("login_user");
-            if(!login_user) {
-                //未登录
-                appcan.openWinWithUrl('login','../../login.html');
-                return;
-            }
-            //请求后台获得订单ID并传到显示二维码的页面(或者保存在appcan.locStorage)
-            sys_common.ajax({
-                url : sys_common.rootPath + sys_common.contextPath + "lz/save",
-                type : "POST",
-                async : true,
-                data : {
-                    bgrId : JSON.parse(login_user).uuid,
-                    selectedIds : appcan.locStorage.getVal("selectedIds"),
-                    operate : appcan.locStorage.getVal("operate")
-                },
-                success : function(res) {
-                    appcan.locStorage.remove("selectedIds"); //在缓存中移除选中的资产, 避免影响下次操作
-                    
-                    appcan.locStorage.setVal("operateId", res);
-                    appcan.openWinWithUrl('qrcode','../qrcode.html');
-                },
-                error : function(err){
-                    appcan.alert({
-                        title : "提示",
-                        content : "网络繁忙，请稍候再试！",
-                        buttons : ['确定'],
-                    });
-                }
+            //请求后台获得流转操作ID保存在appcan.locStorage)
+            saveLzxx(function(){
+                appcan.openWinWithUrl('qrcode','../qrcode.html');
             });
-            
         },
         /**
          * 继续检索添加
@@ -84,6 +82,14 @@ var vm = new Vue({
             appcan.openWinWithUrl(this.operateList[this.operate-1].viewIndex, 
                                 this.operateList[this.operate-1].view);
             uexWindow.close();//关闭当前视图
+        },
+        /**
+         * 对方无法扫码, 直接跳转到接收上传图片界面 
+         */
+        toReceive : function() {
+            saveLzxx(function(){
+                appcan.openWinWithUrl('zc_receive','zc_receive.html');
+            });
         }
     }
 });

@@ -13,11 +13,8 @@
     </head>
     <body ontouchstart>
         <div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
-            <div class="uh bc-head  ubb bc-border" data-control="HEADER" id="Header">
-                <div class="ub">
-                    <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">登录</h1>
-                </div>
-            </div>
+            <header-component v-bind:title="'登录'" v-bind:hasbackbtn="false"></header-component>
+            <loading-component ></loading-component>
             <div class="bc-bg ub ub-ver ub-ac ub-con" data-control="FLEXBOXVER" id="ContentFlexVer">
                 <div class="ub ub-ver uinn-a3 ub-fv ub-fh" style="padding-top:3em">
                     <div class="ub ub-ver uinn-a4">
@@ -25,20 +22,20 @@
                             <div class="ub ub-ac ubb umh5 bc-border ">
                                 <div class=" uinput ub ub-f1">
                                     <div class="uinn fa fa-user sc-text"></div>
-                                    <input placeholder="用户名" type="text" class="ub-f1" id="name" name="name" data-bind="value:name">
+                                    <input placeholder="用户名" type="text" class="ub-f1" id="username" v-model="username">
                                 </div>
                             </div>
                             <div class="ub ub-ac umh5 bc-border ">
                                 <div class=" uinput ub ub-f1">
                                     <div class="uinn fa fa-lock sc-text"></div>
-                                    <input placeholder="密码" type="password" class="umw4 ub-f1" id="pwd" name="pwd" data-bind="value:pwd">
+                                    <input placeholder="密码" type="password" class="umw4 ub-f1" id="pwd" v-model="password">
                                 </div>
                             </div>
                         </div>
                         <div class="ub ub-ver">
                             
                             <div class="uinn uinn-at1">
-                                <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" id="submit">登录</div>
+                                <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="loginSubmit">登录</div>
                                 <div class="uinn-at2 ub sc-text-active ulev-4">
                                     <div class="ub-f1">立即注册</div>
                                     <div class="ub-f1 tx-r">忘记密码</div>

@@ -13,9 +13,8 @@
     </head>
     <body ontouchstart>
         <div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
-            <header-component v-bind:title="'资产'+operateList[operate-1]" v-bind:hasbackbtn="false">
-            </header-component>
-            
+            <header-component v-bind:title="'资产'+operateList[operate-1]" v-bind:hasbackbtn="false"></header-component>
+            <loading-component ></loading-component>
             <div data-control="CONTENT" id="ScrollContent">
             <div class="scrollbox">
             <div>

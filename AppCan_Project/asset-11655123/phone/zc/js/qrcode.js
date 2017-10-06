@@ -1,10 +1,10 @@
 appcan.ready(function(){
+
+var operate = appcan.locStorage.getVal("operate");//操作类型1出库  2流转  3回收
+var login_user = JSON.parse(appcan.locStorage.getVal("login_user"));//当前登录用户的信息
 var openNextView = function() {
-    var operate = appcan.locStorage.getVal("operate");//操作类型1出库  2流转  3回收
-    var login_user = JSON.parse(appcan.locStorage.getVal("login_user"));//当前登录用户的信息
     switch (operate) {
-        case "1" :
-            //出库 
+        case "1" : //出库 
             //当前用户为MA,则跳转到上传照片, 为MK则跳转到统计
             if(_.findIndex(login_user.roles, function(item){return item === "MA"}) !== -1) {
                 appcan.openWinWithUrl('zc_receive','zcck/zc_receive.html');
@@ -12,12 +12,10 @@ var openNextView = function() {
                 appcan.openWinWithUrl('count','count.html');
             }
             break;
-        case "2" : 
-            //流转
+        case "2" : //流转
             appcan.openWinWithUrl('count','count.html');
             break;
-        case "3" : 
-            //TODO 回收...
+        case "3" : //TODO 回收...
             break;
         default : 
             throw new Error("未知的操作类型 : " + operate);
@@ -27,10 +25,14 @@ var openNextView = function() {
 var operateId = appcan.locStorage.getVal("operateId");//操作ID
 var checkFinished = function() {
     // 对后台执行轮询, 等待对方扫码之后确认完成, 显示出库清单
-    sys_common.ajax({
+    appcan.ajax({
         url : sys_common.rootPath + sys_common.contextPath + "lz/checkFinished",
         type : "GET",
-        data : {operateId: operateId, r: Math.random()}, //添加随机数防止缓存
+        data : {
+            operateId: operateId, 
+            r: Math.random(), //添加随机数防止缓存
+            _token : login_user.token
+        }, 
         dataType : "json",
         success : function(res){
             if(res.msg !== "finished") {

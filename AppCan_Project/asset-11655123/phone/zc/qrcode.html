@@ -18,6 +18,7 @@
     <body ontouchstart>
         <div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
             <header-component v-bind:title="'二维码信息'" v-bind:hasbackbtn="false">
+            <loading-component ></loading-component>
             </header-component>
             <div class="bc-bg ub-ver ub-ac qrcode-panel" data-control="FLEXBOXVER" id="ContentFlexVer" >
                 <img id="qrcode_img" v-bind:src="imgSrc" v-bind:title="title"/>

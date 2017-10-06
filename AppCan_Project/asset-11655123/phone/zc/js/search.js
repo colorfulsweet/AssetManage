@@ -7,7 +7,7 @@ appcan.ready(function() {
     }
     var vm = new Vue({
         el : "#Page",
-        created : function(){
+        mounted : function(){
             if(!search) {
                 return;
             }
