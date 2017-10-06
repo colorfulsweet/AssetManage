@@ -15,7 +15,7 @@
     });
     var loginSubmit = function(name, pwd) {
         window.appcan = appcan;
-        appcan.ajax({
+        sys_common.ajax({
             url : sys_common.rootPath + sys_common.contextPath + 'login',
             type : 'POST',
             datatype : 'json',
@@ -24,25 +24,22 @@
                 'user':name,
                 'password':pwd
             },
-            success : function(resJson) {
-                var res = JSON.parse(resJson);
+            success : function(res) {
                 if (res.status === 1) {//登陆成功
                     appcan.window.openToast('登陆成功', '2000');
                     appcan.locStorage.setVal("login_user", JSON.stringify(res.data));
                     var timer = setTimeout(function() {
-                        uexWindow.close();
                         appcan.openWinWithUrl('index', 'index.html');//页面跳转
                     }, 2000);
                 }else {
                     appcan.window.openToast(res.msg, '2000');
                 }
             },
-            
             error : function(err){
                 appcan.alert({
                     title : "提示",
                     content : "网络繁忙，请稍候再试！",
-                    buttons : ['确定'],
+                    buttons : ['确定']
                 });
             }
         });

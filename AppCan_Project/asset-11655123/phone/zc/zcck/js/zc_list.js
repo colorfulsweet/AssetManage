@@ -16,7 +16,8 @@ var vm = new Vue({
             view : "../zccl.html",
             viewIndex : "zccl"
         }],
-        operate : appcan.locStorage.getVal("operate") || 1
+        operate : appcan.locStorage.getVal("operate") || 1,
+        tip : "加载中......"
     },
     created : function() {
         var jsonStr = appcan.locStorage.getVal("selectedIds");
@@ -28,13 +29,14 @@ var vm = new Vue({
        //var zcIds = ["5105", "5106", "5107"];
        // ------------
         var vm = this;
-        appcan.ajax({
+        sys_common.ajax({
             url : sys_common.rootPath + sys_common.contextPath + "zichan/list",
             data : {uuids : zcIds.join(",")},
             type : "GET",
             dataType : "json",
             success : function(res){
                 vm.zcList = res;
+                vm.tip = "没有符合条件的数据";
             }
         });
     },
@@ -50,7 +52,7 @@ var vm = new Vue({
                 return;
             }
             //请求后台获得订单ID并传到显示二维码的页面(或者保存在appcan.locStorage)
-            appcan.ajax({
+            sys_common.ajax({
                 url : sys_common.rootPath + sys_common.contextPath + "lz/save",
                 type : "POST",
                 async : true,

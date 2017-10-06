@@ -11,13 +11,13 @@ appcan.ready(function() {
             if(!search) {
                 return;
             }
-            appcan.ajax({
+            sys_common.ajax({
                 url : sys_common.rootPath + sys_common.contextPath + 'zichan/list',
                 type : 'GET',
                 datatype : 'json',
                 data : search,
                 success : function(res) {
-                    vm.$data.resultList = JSON.parse(res);
+                    vm.$data.resultList = res;
                     vm.$data.tip = "没有符合条件的数据";
                 }
             });
@@ -63,7 +63,7 @@ appcan.ready(function() {
                     //不是第一次添加
                     oldList = JSON.parse(oldList);
                     for(var index in selectedIds) {
-                        if(oldList.findIndex(function(item){return item===selectedIds[index]}) == -1) {
+                        if(_.findIndex(oldList, function(item){return item===selectedIds[index]}) == -1) {
                             //现有列表中没有该ID
                             oldList.push(selectedIds[index]);
                         }

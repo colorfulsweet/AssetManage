@@ -12,6 +12,69 @@
         this.maxFileSize = 5 * 1024 * 1024; //5MB
     };
     SysFunction.prototype.operateList = ["出库", "流转", "回收"];
+    /** 
+     * appcan.ajax方法代理<br>
+     * 在ajax请求当中添加token数据用于后端认证 <br>
+     * 并且对success方法的传参进行包装
+     * 
+     */
+    SysFunction.prototype.ajax = function(config, notAddToken) {
+        if(typeof config.success === "function") {
+            var oldFunc = config.success;
+            config.success = function(resJson) {
+                if(typeof resJson === "string") {
+                    try {
+                        arguments[0] = JSON.parse(resJson);
+                    } catch(e){}
+                }
+                if(arguments[0].status === -1) { //未登录
+                    appcan.alert({
+                        title : "提示",
+                        content : "请登录后再执行该操作",
+                        buttons : ['确定']
+                    });
+                }
+                oldFunc.apply(null, Array.prototype.slice.call(arguments));
+            }
+        }
+        
+        if(notAddToken) {
+            return appcan.ajax(config);
+        }
+        var loginUserStr = appcan.locStorage.getVal("login_user");
+        var loginUser = null;
+        if(loginUserStr) {
+            loginUser = JSON.parse(loginUserStr);
+        } else {
+            return appcan.ajax(config);
+        }
+        if(config.data instanceof FormData) {
+            //文件上传
+            config.data.append("_token", loginUser.token);
+        } else {
+            switch (typeof config.data) {
+            case "undefined" : 
+                //不包含data属性, 是undefined
+                config.data = {"_token" : loginUser.token};
+                break;
+            case "object" :
+                if(config.data) {
+                    //包含data属性, 是普通的JS对象
+                    config.data["_token"] = loginUser.token;
+                } else {
+                    //不包含data属性或者包含, 但是为null
+                    config.data = {"_token" : loginUser.token};
+                }
+                break;
+            case "string" : 
+                //包含data属性, 是query格式的字符串
+                config.data += ("&_token=" + loginUser.token);
+                break;
+            }
+        }
+        
+        return appcan.ajax(config);
+    }
     /*
      //url传递查询参数在手机端运行时无效
     SysFunction.prototype.getQueryString = function(name) {

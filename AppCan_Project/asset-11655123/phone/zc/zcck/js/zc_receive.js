@@ -15,18 +15,14 @@ var vm = new Vue({
         this.from = appcan.locStorage.getVal("from");
         appcan.locStorage.remove("from");
         //二维码信息中包含 operateType 和 operateId
-        appcan.ajax({
+        sys_common.ajax({
             type : "POST",
             url : sys_common.rootPath + sys_common.contextPath + "zichan/getByOperateId",
             data : {
                 operateId : this.operateId
             },
             success : function(res) {
-                if (Array.isArray(res)) {
-                    vm.$data.zcList = res;
-                } else {
-                    vm.$data.zcList = JSON.parse(res);
-                }
+                vm.$data.zcList = res;
             }
         });
     },

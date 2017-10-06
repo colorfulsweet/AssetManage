@@ -47,7 +47,7 @@ var vm = new Vue({
             if(userJson) {
                 loginUser = JSON.parse(userJson);
             }
-            appcan.ajax({
+            sys_common.ajax({
                 url : sys_common.rootPath + sys_common.contextPath + "lz/finished",
                 data : {
                     operateId : this.operateId, 

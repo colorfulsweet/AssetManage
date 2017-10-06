@@ -64,7 +64,7 @@ var vm = new Vue({
             return;
         }
         var vm = this;
-        appcan.ajax({
+        sys_common.ajax({
             url : sys_common.rootPath + sys_common.contextPath + "zichan/findByBgrId",
             type : "GET",
             dataType : "json",
@@ -72,11 +72,7 @@ var vm = new Vue({
                 bgrId : JSON.parse(loginUserStr).uuid
             },
             success : function(res) {
-                if(Array.isArray(res)) {
-                    vm.zcList = res;
-                } else {
-                    vm.zcList = JSON.parse(res);
-                }
+                vm.zcList = res;
             }
         });
     },

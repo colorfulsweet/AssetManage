@@ -41,6 +41,7 @@
                         <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.danwei}}</div>
                     </div>
                 </div>
+                <div v-if="!zcList || zcList.length==0">{{tip}}</div>
                 <div class="uinn uinn-at1">
                     <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="toQrcode">生成二维码</div>
                 </div>
