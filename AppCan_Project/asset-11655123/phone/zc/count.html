@@ -76,6 +76,9 @@ var vm = new Vue({
     created : function(){
         appcan.locStorage.remove("operateId");
         appcan.locStorage.remove("operate");
+        if(!this.operateId) {
+            return;
+        }
         var url = sys_common.rootPath + sys_common.contextPath + "lz/count/"+this.operateId;
         appcan.ajax({
             url : url,
