@@ -21,7 +21,7 @@
      * 隐藏加载提示框 
      */
     var hideLoading = function() {
-        if(!loading.size()) {
+        if(!loading || !loading.size()) {
             loading = $("#loading-container");
         }
         loading.hide();
@@ -44,7 +44,7 @@
      * 
      */
     SysFunction.prototype.ajax = function(config, context) {
-        if(!loading.size()) {
+        if(!loading || !loading.size()) {
             loading = $("#loading-container");
         }
         loading.show();
@@ -120,10 +120,10 @@
     /**
      * 绑定页面标题组件 
      */
-    var loginUsername = null;
+    var realname = null;
     var loginUserStr = appcan.locStorage.getVal("login_user");
     if(loginUserStr) {
-        loginUsername = JSON.parse(loginUserStr).user;
+        realname = JSON.parse(loginUserStr).realname;
     }
     //全局定义页头组件
     Vue.component("header-component",{
@@ -146,11 +146,11 @@
                             "</div>"+
                             "<h1 class='ut ub-f1 ulev-3 ut-s tx-c' >{{title}}</h1>"+
                             "<div class='nav-btn' id='nav-right'>"+
-                                "<div class='fa fa-user ub-img1' v-if='username' >{{username}}</div>"+
+                                "<div class='fa fa-user ub-img1' v-if='realname' >{{realname}}</div>"+
                             "</div>"+
                         "</div></div>",
         data : function() {
-            return {username : loginUsername};
+            return {realname : realname};
         },
         methods : {
             //关闭当前视图

@@ -4,7 +4,7 @@ var vm = new Vue({
     data : {
         zcList : [],
         selectItemIndex : null,
-        operateId : appcan.locStorage.getVal("operateId") || "123",
+        operateId : appcan.locStorage.getVal("operateId"),
         operate : appcan.locStorage.getVal("operate") || 1,
         operateList : sys_common.operateList,
         from : appcan.locStorage.getVal("from") //该页面从哪个页面跳转而来
@@ -42,32 +42,32 @@ var vm = new Vue({
          */
         takePhoto : function() {
             // 调用摄像头拍照
+            var vm = this;
             uexCamera.open(0, 60, function(picPath) {//获取到图片的路径
-                //创建图片上传器
-                var uploader = uexUploaderMgr.create({
+                var req = uexXmlHttpMgr.create({
                     url : sys_common.rootPath + sys_common.contextPath + "lz/uploadPhoto",
-                    type : 0
-                });
-                //设置请求消息头
-                var headJson = {"Content-Type" : "multipart/form-data"};
-                uexUploaderMgr.setHeaders(uploader, JSON.stringify(headJson));
+                    method : "POST"
+                })
+                uexXmlHttpMgr.setPostData(req, 0,"operateId", vm.operateId);
+                uexXmlHttpMgr.setPostData(req, 0,"zcId", vm.zcList[vm.selectItemIndex].uuid);
+                uexXmlHttpMgr.setPostData(req, 1,"uploadPhoto", picPath);
+                uexXmlHttpMgr.send(req, 1,  function(status,responseStr,resCode,resInfo){
+                        var result = JSON.parse(responseStr);
+                        appcan.window.openToast(result.msg, '2000');
+                        if(result.status && result.data) {
+                            var picUrl = sys_common.rootPath + sys_common.contextPath + result.data;
+                            var img_preview = $("#tableBody > div .img-preview").eq(vm.selectItemIndex);
+                            img_preview.css({
+                                "background-image" : "url("+picUrl+")", // base64编码
+                                "width" : "7em",
+                                "height" : "7em"
+                            });
+                        }
+                        uexXmlHttpMgr.close(req);
+                   },function(){});
                 
-                //执行文件上传
-                uexUploaderMgr.uploadFile(uploader, "file://" + picPath, "uploadPhoto", 2, 700,function(packageSize, percent, responseString, status){
-                    switch (status) {
-                    case 0: //上传中
-                        //document.getElementById('percentage').innerHTML = "上传包大小:"+packageSize+"<br>上传进度:"+percent+"%";
-                        break;
-                    case 1: //上传成功
-                        alert("上传成功,服务器response:"+responseString);
-                        break;
-                    case 2: //上传失败
-                        alert("上传失败");
-                        break;
-                    }
-                });
                 appcan.alert({
-                    title : "图片路径",
+                    title : "图片保存路径",
                     content : picPath,
                     buttons : ['确定']
                 });
