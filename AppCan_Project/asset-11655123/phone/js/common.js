@@ -2,9 +2,11 @@
     //页面当中的公共变量 方法等
     var SysFunction = function() {
         //公司外网主机
-        //this.rootPath = "http://123.232.10.234:8150";
+        this.rootPath = "http://123.232.10.234:8150";
         //局域网主机
-        this.rootPath = "http://192.168.31.137:9000";
+        //this.rootPath = "http://192.168.31.19:9000";
+        //本地
+        //this.rootPath = "http://localhost:9000";
         //云主机
         //this.rootPath = "http://116.196.68.51:9000";
         this.contextPath = "/";
@@ -69,7 +71,7 @@
                 }
                 hideLoading();
                 successCallback.apply(null, Array.prototype.slice.call(arguments));
-            }
+            };
         } else {
             config.success = hideLoading;
         }
@@ -77,7 +79,7 @@
             config.error = function(){
                 defaultErrorCallback();
                 errorCallback.apply(null, Array.prototype.slice.call(arguments));
-            }
+            };
         } else {
             config.error = defaultErrorCallback;
         }
@@ -115,7 +117,7 @@
         }
         
         return context.ajax(config);
-    }
+    };
     window.sys_common = new SysFunction();
     /**
      * 绑定页面标题组件 

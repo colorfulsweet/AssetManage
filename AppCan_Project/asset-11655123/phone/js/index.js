@@ -21,16 +21,16 @@ var scannerCallback = function(err, data){
         appcan.locStorage.setVal("from", "index");
         switch (content.operateType) {
             case "1" : //出库(可以由MA或者MK扫码)
-                if(_.findIndex(login_user.roles, function(item){return item === "MA"}) !== -1) {
+                if(_.findIndex(login_user.roles, function(item){return item === "MA";}) !== -1) {
                     appcan.openWinWithUrl('zcck_receive','zc/zcck/zc_receive.html');
-                } else if(_.findIndex(login_user.roles, function(item){return item === "MK"}) !== -1) {
+                } else if(_.findIndex(login_user.roles, function(item){return item === "MK";}) !== -1) {
                     appcan.openWinWithUrl('zc_confirm','zc/zcck/zc_confirm.html');
                 } else {
                     appcan.window.openToast('无操作权限', '2000');
                 }
                 break;
             case "2" : //流转(必须由MK扫码)
-                if(_.findIndex(login_user.roles, function(item){return item === "MK"}) !== -1) {
+                if(_.findIndex(login_user.roles, function(item){return item === "MK";}) !== -1) {
                     appcan.openWinWithUrl('zcck_receive','zc/zcck/zc_receive.html');
                 } else {
                     appcan.window.openToast('无操作权限', '2000');
@@ -42,7 +42,7 @@ var scannerCallback = function(err, data){
     } else {
         appcan.window.openToast('无效内容', '2000');
     }
-}
+};
 var vm = new Vue({
     el : "#Page",
     data : {

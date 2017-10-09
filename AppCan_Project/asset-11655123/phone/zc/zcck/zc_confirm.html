@@ -57,6 +57,8 @@ var vm = new Vue({
                 },
                 success : function(){
                     alert("操作成功");
+                    appcan.openWinWithUrl('count','../count.html');
+                    uexWindow.close();
                 }
             });
         }

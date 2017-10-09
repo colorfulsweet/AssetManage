@@ -23,7 +23,7 @@ var saveLzxx = function(callback) {
             }
         }
     });
-}
+};
 var vm = new Vue({
     el : "#Page",
     data : {
@@ -88,7 +88,9 @@ var vm = new Vue({
          */
         toReceive : function() {
             saveLzxx(function(){
+                appcan.locStorage.setVal("from", "noQrcode");
                 appcan.openWinWithUrl('zc_receive','zc_receive.html');
+                uexWindow.close();
             });
         }
     }

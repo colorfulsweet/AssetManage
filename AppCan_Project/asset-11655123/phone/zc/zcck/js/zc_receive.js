@@ -4,7 +4,7 @@ var vm = new Vue({
     data : {
         zcList : [],
         selectItemIndex : null,
-        operateId : appcan.locStorage.getVal("operateId"),
+        operateId : appcan.locStorage.getVal("operateId") ,
         operate : appcan.locStorage.getVal("operate") || 1,
         operateList : sys_common.operateList,
         from : appcan.locStorage.getVal("from") //该页面从哪个页面跳转而来
@@ -47,7 +47,7 @@ var vm = new Vue({
                 var req = uexXmlHttpMgr.create({
                     url : sys_common.rootPath + sys_common.contextPath + "lz/uploadPhoto",
                     method : "POST"
-                })
+                });
                 uexXmlHttpMgr.setPostData(req, 0,"operateId", vm.operateId);
                 uexXmlHttpMgr.setPostData(req, 0,"zcId", vm.zcList[vm.selectItemIndex].uuid);
                 uexXmlHttpMgr.setPostData(req, 1,"uploadPhoto", picPath);
@@ -160,11 +160,12 @@ var vm = new Vue({
          */
         finished : function() {
             switch(this.from) {
-                case "index" : //跳转至接收方确认页面
+                case "noQrcode" : //对方无法扫码 -> 跳转至本页面
+                case "index" : //扫码操作后解析二维码 -> 跳转至本页面
                     appcan.openWinWithUrl('zc_confirm','zc_confirm.html');
                     break;
-                case "qrcode" : //跳转至发送方提示页面
-                    appcan.openWinWithUrl('zc_tip','zc_tip.html');
+                case "qrcode" : //二维码展示页面等待对方扫码确认完成 -> 跳转至本页面
+                    appcan.openWinWithUrl('count','../count.html');
                     break;
             }
             uexWindow.close();
