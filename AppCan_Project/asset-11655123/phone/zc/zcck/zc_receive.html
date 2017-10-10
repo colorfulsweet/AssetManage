@@ -53,6 +53,12 @@
         <form action="" id="uploadForm" method="post" enctype="multipart/form-data" style="display:none;">
             <input type="file" id="uploadPhoto" name="uploadPhoto" v-on:change="selectFile"/>
         </form>
+        
+        <div class="uinput uinn4" v-if="from === 'noQrcode'">
+            <input placeholder="请输入对方姓名" type="text" class="tx-r" v-model="targetName">
+        </div>
+        
+        
         <div class="uinn uinn-at1" >
             <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="takePhoto">拍照</div>
         </div>

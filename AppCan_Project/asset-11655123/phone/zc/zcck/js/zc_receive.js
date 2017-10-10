@@ -3,6 +3,7 @@ var vm = new Vue({
     el : "#Page",
     data : {
         zcList : [],
+        targetName : null, //对方的姓名
         selectItemIndex : null,
         operateId : appcan.locStorage.getVal("operateId") ,
         operate : appcan.locStorage.getVal("operate") || 1,
@@ -10,7 +11,6 @@ var vm = new Vue({
         from : appcan.locStorage.getVal("from") //该页面从哪个页面跳转而来
     },
     mounted : function() {
-        appcan.locStorage.remove("from");
         if(!this.operateId) {
             return;
         }
@@ -132,14 +132,6 @@ var vm = new Vue({
                 data : formData,
                 processData : false,
                 contentType : false,
-                /*
-                success : function() {
-                    appcan.window.openToast('文件上传成功', '2000');
-                },
-                error : function() {
-                    appcan.window.openToast('文件上传失败', '2000');
-                },
-                */
                 complete : function(xhr, res) {
                     var result = JSON.parse(xhr.responseText);
                     appcan.window.openToast(result.msg, '2000');
@@ -151,6 +143,7 @@ var vm = new Vue({
                             "width" : "7em",
                             "height" : "7em"
                         });
+                        vm.zcList[vm.selectItemIndex].hasPic = true;
                     }
                 }
             }, $);
@@ -159,8 +152,34 @@ var vm = new Vue({
          * 完成
          */
         finished : function() {
+            if(! _.every(this.zcList, function(item){ return item.hasPic; }) ) {
+                appcan.window.openToast('请为所有的资产上传对应照片', '2000');
+                return;
+            }
             switch(this.from) {
                 case "noQrcode" : //对方无法扫码 -> 跳转至本页面
+                    if(!this.targetName) {
+                        appcan.window.openToast('请输入对方姓名', '2000');
+                        return;
+                    }
+                    sys_common.ajax({
+                        url : sys_common.rootPath + sys_common.contextPath + "lz/saveTargetName",
+                        type : "POST",
+                        data : {
+                            operateId : this.operateId,
+                            operate : this.operate,
+                            targetName : this.targetName
+                        },
+                        success : function(res) {
+                            if(!res.status) {
+                                appcan.window.openToast(res.msg, '2000');
+                                return;
+                            }
+                            appcan.openWinWithUrl('zc_confirm','zc_confirm.html');
+                            uexWindow.close();
+                        }
+                    });
+                    return;
                 case "index" : //扫码操作后解析二维码 -> 跳转至本页面
                     appcan.openWinWithUrl('zc_confirm','zc_confirm.html');
                     break;

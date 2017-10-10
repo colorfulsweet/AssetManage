@@ -28,6 +28,8 @@
             <div class="ub-f1 ub-con ub-pc ub">名称</div>
             <div class="umw1"></div>
             <div class="ub-f1 ub-con ub-pc ub">类别</div>
+            <div class="umw1"></div>
+            <div class="ub-f1 ub-con ub-pc ub">保管人</div>
         </div>
         <div>
             <div class="ub ub-hor ub-f1 ulev-1 uinn ub-ac umh4" v-for="item in resultList" v-on:click="trSelect(item)">
@@ -36,6 +38,8 @@
                 <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.mingch}}</div>
                 <div class="umw1"></div>
                 <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.lbie}}</div>
+                <div class="umw1"></div>
+                <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.bgr ? item.bgr.realname : null}}</div>
             </div>
         </div>
         <div v-if="!resultList || resultList.length==0">{{tip}}</div>

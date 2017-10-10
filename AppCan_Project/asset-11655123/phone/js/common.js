@@ -2,9 +2,9 @@
     //页面当中的公共变量 方法等
     var SysFunction = function() {
         //公司外网主机
-        this.rootPath = "http://123.232.10.234:8150";
+        //this.rootPath = "http://123.232.10.234:8150";
         //局域网主机
-        //this.rootPath = "http://192.168.31.19:9000";
+        this.rootPath = "http://192.168.31.19:9000";
         //本地
         //this.rootPath = "http://localhost:9000";
         //云主机

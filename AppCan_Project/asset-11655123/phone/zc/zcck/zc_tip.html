@@ -18,9 +18,9 @@
             <loading-component ></loading-component>
             <div data-control="CONTENT" id="ScrollContent">
             <div class="scrollbox">
-                <div>请交接货物, 提交交接信息</div>
+                <div>请等待对方上传资产照片完成</div>
                 <div class="uinn uinn-at1" >
-                    <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="submit">提交</div>
+                    <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="submit">确认</div>
                 </div>
                 <div class="uinn uinn-at1" >
                     <div class="button ub ub-ac bc-text-head ub-pc sc-btn uc-a1" id="cancel">取消</div>
@@ -39,40 +39,23 @@ var vm = new Vue({
     data : {
         operateId : appcan.locStorage.getVal("operateId"),
         operate : appcan.locStorage.getVal("operate") || 1,
-        operateList : sys_common.operateList,
-        from : appcan.locStorage.getVal("from")
+        operateList : sys_common.operateList
     },
     methods : {
         submit : function(){
-            var userJson = appcan.locStorage.getVal("login_user");
-            var loginUser = null;
-            if(userJson) {
-                loginUser = JSON.parse(userJson);
-            }
-            var vm = this;
             sys_common.ajax({
-                url : sys_common.rootPath + sys_common.contextPath + "lz/finished",
+                url : sys_common.rootPath + sys_common.contextPath + "lz/checkUpload",
                 data : {
-                    operateId : this.operateId, 
-                    operate : this.operate,
-                    bgrId: (loginUser ? loginUser.uuid : "")
+                    operateId : this.operateId
                 },
-                success : function(){
-                    switch(vm.operate) {
-                        case "1" : 
-                            if(_.findIndex(loginUser.roles, function(item){return item==='MK';}) !== -1 && vm.from !== 'noQrcode') {
-                                appcan.openWinWithUrl('zc_tip','zc_tip.html');
-                            } else {
-                                alert("操作成功");
-                                appcan.openWinWithUrl('count','../count.html');
-                            }
-                            break;
-                        case "2" : 
-                            appcan.openWinWithUrl('count','../count.html');
-                            break;
-                        case "3" : //TODO 回收
+                success : function(res){
+                    if(res.status) {
+                        alert("操作成功");
+                        appcan.openWinWithUrl('count','../count.html');
+                        uexWindow.close();
+                    } else {
+                        appcan.window.openToast('请等待对方上传照片完成', '2000');
                     }
-                    uexWindow.close();
                 }
             });
         }
