@@ -1,9 +1,23 @@
 appcan.ready(function() {
+/**
+ * 在列表中生成照片预览 
+ */
+var updatePreview = function(picPath) {
+    var picUrl = sys_common.rootPath + sys_common.contextPath + "lz/readPhoto?photoPath="+picPath;
+    var img_preview = $("#tableBody > div .img-preview").eq(vm.selectItemIndex);
+    img_preview.css({
+        "background-image" : "url("+picUrl+")",
+        "width" : "7em",
+        "height" : "7em"
+    });
+    vm.zcList[vm.selectItemIndex].hasPic = true;
+}
+
 var vm = new Vue({
     el : "#Page",
     data : {
         zcList : [],
-        targetName : null, //对方的姓名
+        targetTel : null, //对方的姓名
         selectItemIndex : null,
         operateId : appcan.locStorage.getVal("operateId") ,
         operate : appcan.locStorage.getVal("operate") || 1,
@@ -55,13 +69,7 @@ var vm = new Vue({
                         var result = JSON.parse(responseStr);
                         appcan.window.openToast(result.msg, '2000');
                         if(result.status && result.data) {
-                            var picUrl = sys_common.rootPath + sys_common.contextPath + result.data;
-                            var img_preview = $("#tableBody > div .img-preview").eq(vm.selectItemIndex);
-                            img_preview.css({
-                                "background-image" : "url("+picUrl+")", // base64编码
-                                "width" : "7em",
-                                "height" : "7em"
-                            });
+                            updatePreview(result.data);
                         }
                         uexXmlHttpMgr.close(req);
                    },function(){});
@@ -136,14 +144,7 @@ var vm = new Vue({
                     var result = JSON.parse(xhr.responseText);
                     appcan.window.openToast(result.msg, '2000');
                     if(result.status && result.data) {
-                        var picUrl = sys_common.rootPath + sys_common.contextPath + result.data;
-                        var img_preview = $("#tableBody > div .img-preview").eq(vm.selectItemIndex);
-                        img_preview.css({
-                            "background-image" : "url("+picUrl+")", // base64编码
-                            "width" : "7em",
-                            "height" : "7em"
-                        });
-                        vm.zcList[vm.selectItemIndex].hasPic = true;
+                        updatePreview(result.data);
                     }
                 }
             }, $);
@@ -158,17 +159,17 @@ var vm = new Vue({
             }
             switch(this.from) {
                 case "noQrcode" : //对方无法扫码 -> 跳转至本页面
-                    if(!this.targetName) {
-                        appcan.window.openToast('请输入对方姓名', '2000');
+                    if(!this.targetTel) {
+                        appcan.window.openToast('请输入对方手机号码', '2000');
                         return;
                     }
                     sys_common.ajax({
-                        url : sys_common.rootPath + sys_common.contextPath + "lz/saveTargetName",
+                        url : sys_common.rootPath + sys_common.contextPath + "lz/saveTargetTel",
                         type : "POST",
                         data : {
                             operateId : this.operateId,
                             operate : this.operate,
-                            targetName : this.targetName
+                            targetTel : this.targetTel
                         },
                         success : function(res) {
                             if(!res.status) {
@@ -187,7 +188,9 @@ var vm = new Vue({
                     appcan.openWinWithUrl('count','../count.html');
                     break;
             }
-            uexWindow.close();
+            setTimeout(function(){
+                uexWindow.close();
+            }, 1000);
         },
         /**
          * 取消

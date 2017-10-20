@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../css/ui-box.css">
+        <link rel="stylesheet" href="../css/ui-base.css">
+        <link rel="stylesheet" href="../css/ui-color.css">
+        <link rel="stylesheet" href="../css/appcan.icon.css">
+        <link rel="stylesheet" href="../css/appcan.control.css">
+    </head>
+    <body ontouchstart>
+        <div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
+            <header-component v-bind:title="'修改密码'" v-bind:hasbackbtn="true"></header-component>
+            <loading-component ></loading-component>
+            <div data-control="CONTENT" id="ScrollContent">
+            <div class="scrollbox">
+                <ul  class=" ubb ub bc-border bc-text ub-ac uinn">
+                    <li class="ub-f1 ut-s ulev-app1">原密码</li>
+                    <li class="tx-r t-blu ulev-app1 ub-ae">
+                        <div class="uinput uinn4">
+                            <input placeholder="请输入" type="password" class="tx-r" v-model="oldPwd">
+                        </div>
+                    </li>
+                </ul>
+                <ul  class=" ubb ub bc-border bc-text ub-ac uinn">
+                    <li class="ub-f1 ut-s ulev-app1">新密码</li>
+                    <li class="tx-r t-blu ulev-app1 ub-ae">
+                        <div class="uinput uinn4">
+                            <input placeholder="请输入" type="password" class="tx-r" v-model="newPwd">
+                        </div>
+                    </li>
+                </ul>
+                <ul  class=" ubb ub bc-border bc-text ub-ac uinn">
+                    <li class="ub-f1 ut-s ulev-app1">确认新密码</li>
+                    <li class="tx-r t-blu ulev-app1 ub-ae">
+                        <div class="uinput uinn4">
+                            <input placeholder="请输入" type="password" class="tx-r" v-model="confirmPwd">
+                        </div>
+                    </li>
+                </ul>
+                <div class="uinn uinn-at1">
+                    <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="changePwd">提交</div>
+                </div>
+                <div class="uinn uinn-at1">
+                    <div class="button ub ub-ac bc-text-head ub-pc sc-btn uc-a1" v-on:click="closeView">返回</div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <script src="../js/appcan.js"></script>
+        <script src="../js/appcan.control.js"></script>
+        <script src="../js/vue/vue.js"></script>
+        <script src="../js/common.js"></script>
+        <script>
+(function(){
+var vm = new Vue({
+    el :"#Page",
+    data : {
+        loginUserId : null,
+        oldPwd : null,
+        newPwd : null,
+        confirmPwd : null
+    },
+    created : function(){
+        var loginUserStr = appcan.locStorage.getVal("login_user");
+        if(!loginUserStr) {
+            return;
+        }
+        this.loginUserId = JSON.parse(loginUserStr).uuid;
+    },
+    methods : {
+        /**
+         * 修改密码 
+         */
+        changePwd : function() {
+            if(!this.oldPwd) {
+                appcan.window.openToast('请输入原密码', '2000');
+                return;
+            }
+            if(!this.newPwd) {
+                appcan.window.openToast('请输入新密码', '2000');
+                return;
+            }
+            if(this.newPwd !== this.confirmPwd) {
+                appcan.window.openToast('两次输入的密码不一致', '2000');
+                return;
+            }
+            sys_common.ajax({
+                url : sys_common.rootPath + sys_common.contextPath + "changePwd",
+                type : "POST",
+                datatype : 'json',
+                data : {
+                    bgrId : this.loginUserId,
+                    oldPwd : this.oldPwd,
+                    newPwd : this.newPwd
+                },
+                success : function(res){
+                    appcan.window.openToast(res.msg, '2000');
+                    if(res.status) {
+                        setTimeout(function(){
+                            uexWindow.close();
+                        },2000);
+                    }
+                }
+            });
+        },
+        /**
+         * 返回 
+         */
+        closeView : function(){
+            uexWindow.close();
+        }
+    }
+});
+
+})();
+        </script>
+    </body>
+</html>

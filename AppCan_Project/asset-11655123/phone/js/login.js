@@ -3,7 +3,7 @@
 var vm = new Vue({
     el : "#Page",
     data : {
-        username : null,
+        username : localStorage.getItem("re_username"),
         password : null
     },
     methods : {
@@ -18,6 +18,7 @@ var vm = new Vue({
                 $("#pwd").focus();
                 return;
             } 
+            localStorage.setItem("re_username", this.username);//记住用户名,下次登录时自动填充
             sys_common.ajax({
                 url : sys_common.rootPath + sys_common.contextPath + 'login',
                 type : 'POST',

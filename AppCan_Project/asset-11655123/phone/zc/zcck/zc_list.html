@@ -37,7 +37,10 @@
                         <div class="umw1"></div>
                         <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.mingch}}</div>
                         <div class="umw1"></div>
-                        <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.shul}}</div>
+                        <div class="ub-f1 ub-con ub-ac ub-pc ub">
+                            <!-- <span>{{item.shul}}</span> -->
+                            <input :value="item.shul" style="width:100%;text-align:center;font-size:1.3em" v-on:change="numChange(index)"/>
+                        </div>
                         <div class="umw1"></div>
                         <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.danwei}}</div>
                     </div>

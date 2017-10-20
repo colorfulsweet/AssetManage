@@ -11,48 +11,49 @@
         <link rel="stylesheet" href="css/appcan.icon.css">
         <link rel="stylesheet" href="css/appcan.control.css">
     </head>
-    <body ontouchstart>
+    <body class="" ontouchstart>
         <div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
             <header-component v-bind:title="'登录'" v-bind:hasbackbtn="false"></header-component>
             <loading-component ></loading-component>
-            <div class="bc-bg ub ub-ver ub-ac ub-con" data-control="FLEXBOXVER" id="ContentFlexVer">
-                <div class="ub ub-ver uinn-a3 ub-fv ub-fh" style="padding-top:3em">
-                    <div class="ub ub-ver uinn-a4">
-                        <div class="umar-a uba bc-border c-wh">
-                            <div class="ub ub-ac ubb umh5 bc-border ">
-                                <div class=" uinput ub ub-f1">
-                                    <div class="uinn fa fa-user sc-text"></div>
-                                    <input placeholder="用户名" type="text" class="ub-f1" id="username" v-model="username">
-                                </div>
-                            </div>
-                            <div class="ub ub-ac umh5 bc-border ">
-                                <div class=" uinput ub ub-f1">
-                                    <div class="uinn fa fa-lock sc-text"></div>
-                                    <input placeholder="密码" type="password" class="umw4 ub-f1" id="pwd" v-model="password">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="ub ub-ver">
-                            
-                            <div class="uinn uinn-at1">
-                                <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="loginSubmit">登录</div>
-                                <div class="uinn-at2 ub sc-text-active ulev-4">
-                                    <div class="ub-f1">立即注册</div>
-                                    <div class="ub-f1 tx-r">忘记密码</div>
-                                </div>
-                                <div>测试用户 : MA1 MK1 MK2 , 密码都是123</div>
-                            </div>
-                        </div>
-
+            <div data-control="CONTENT" id="ScrollContent">
+                <div class="ub-fh">
+                    <div class="uinn-4a ub ub-ac ub-pc">
+                        <div class="logo ub-img umhw1"></div>
                     </div>
-					<div class="uinn-4b"></div>
+                    <div class="uinn ub ub-ac ub-pc ub-ver">
+                        <div class="ulev1 t-blu addfont uinn">资产管理系统</div>
+                    </div>
+                    <div class="ub ub-ver ub-f1">
+                        <form method="post" action="">
+                            <div class="uba b-gra umar-a uc-a1 c-wh">
+                                <div class="ub ub-ac">
+                                    <div class="umhw resuser ub-img umar-l"></div>
+                                    <div class="ub-f1 uinput uinn">
+                                        <input placeholder="用户名" id="uid" type="text" class="uc-a1" v-model="username" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="uba b-gra umar-a uc-a1 c-wh">
+                                <div class="ub ub-ac">
+                                    <div class="umhw respwd ub-img umar-l"></div>
+                                    <div class="ub-f1 uinput uinn">
+                                        <input placeholder="密码" id="upwd" type="password" class="uc-a1" v-model="password">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="uin uinn">
+                                <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="loginSubmit">登　录</div>
+                            </div>
+                            <div>测试用户 : MA1 MK1 MK2 , 密码都是123</div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
         <script src="js/appcan.js"></script>
         <script src="js/appcan.control.js"></script>
-		<script src="js/vue/vue.js"></script>
-		<script src="js/common.js"></script>
+        <script src="js/vue/vue.js"></script>
+        <script src="js/common.js"></script>
         <script src="js/login.js"></script>
     </body>
 </html>

@@ -89,6 +89,11 @@ var vm = new Vue({
             name : "当前资产",
             url : "my/my_assets.html",
             callback : "openUrl"
+        },{
+            id : "change_pwd",
+            name : "修改密码",
+            url : "my/change_pwd.html",
+            callback : "openUrl"
         }]],
         tabs : {
             selectIndex : 0,

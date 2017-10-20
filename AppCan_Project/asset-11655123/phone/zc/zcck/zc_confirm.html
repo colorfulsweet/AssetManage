@@ -72,7 +72,9 @@ var vm = new Vue({
                             break;
                         case "3" : //TODO 回收
                     }
-                    uexWindow.close();
+                    setTimeout(function(){
+                        uexWindow.close();
+                    }, 1000);
                 }
             });
         }
