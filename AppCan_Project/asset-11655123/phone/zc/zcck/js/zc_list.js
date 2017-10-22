@@ -57,7 +57,7 @@ var vm = new Vue({
         var vm = this;
         sys_common.ajax({
             url : sys_common.rootPath + sys_common.contextPath + "zichan/list",
-            data : {uuids : zcIds.join(","), _token:"1"},
+            data : {uuids : zcIds.join(",")},
             type : "GET",
             dataType : "json",
             success : function(res){
