@@ -77,7 +77,7 @@ var vm = new Vue({
         }] , [{ //===我的===
             id : "my_info",
             name : "我的信息",
-            //url : "my/my_info.html",
+            url : "my/my_info.html",
             callback : "openUrl"
         },{
             id : "my_record",

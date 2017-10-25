@@ -26,7 +26,8 @@ var vm = new Vue({
     },
     data : {
         resultList : [],
-        datailList : [], //
+        datailList : [], //详情信息列表, 结构 [{label:"字段名",value:"字段值"},...]
+        imageList : null,
         showDialog : false, //是否显示dialog框
         selectIndex : null, //选中行的索引
         tip : "" //提示文字
@@ -47,7 +48,20 @@ var vm = new Vue({
                 }
             }
             this.datailList = datailList;
-            this.showDialog = true;
+            var _this = this;
+            sys_common.ajax({
+                type:"POST",
+                url : sys_common.rootPath + sys_common.contextPath + "zichan/findLastPhoto",
+                data : {zcid : this.resultList[index].zcid},
+                success : function(res) {
+                    _this.imageList = res;
+                    _this.toggleDialog(true);
+                }
+            });
+        },
+        
+        toggleDialog : function(status){
+            this.showDialog = status;
         },
         /**
          * 选中/取消选中当前行 
@@ -55,7 +69,7 @@ var vm = new Vue({
         trSelect : function() {
             this.resultList[this.selectIndex].isSelected = 
                     !this.resultList[this.selectIndex].isSelected;
-            this.showDialog = false;
+            this.toggleDialog(false);
         },
         /**
          * 取消按钮/导航条返回 
