@@ -82,7 +82,7 @@ var vm = new Vue({
         },{
             id : "my_record",
             name : "我的记录",
-            //url : "my/my_record.html",
+            url : "my/my_record.html",
             callback : "openUrl"
         },{
             id : "my_assets",

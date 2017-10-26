@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../css/ui-box.css">
+        <link rel="stylesheet" href="../css/ui-base.css">
+        <link rel="stylesheet" href="../css/ui-color.css">
+        <link rel="stylesheet" href="../css/appcan.icon.css">
+        <link rel="stylesheet" href="../css/appcan.control.css">
+        <style>
+            .more{
+                text-align: center;
+            }
+            .more a {
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body ontouchstart>
+        <div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
+            <header-component v-bind:title="'我的记录'" v-bind:hasbackbtn="true"></header-component>
+            <loading-component ></loading-component>
+            <div data-control="CONTENT" id="ScrollContent">
+            <div class="scrollbox">
+                 <div class="ub uinn c-gra1 table-head">
+                    <div class="ub-f1 ub-con ub-pc ub">资产名称</div>
+                    <div class="umw1"></div>
+                    <div class="ub-f1 ub-con ub-pc ub">数量</div>
+                    <div class="umw1"></div>
+                    <div class="ub-f1 ub-con ub-pc ub">交接方</div>
+                    <div class="umw1"></div>
+                    <div class="ub-f1 ub-con ub-pc ub">时间</div>
+                </div>
+                <div>
+                    <div class="ub ub-hor ub-f1 ulev-1 uinn ub-ac umh4" v-for="(item,index) in lzList" 
+                        v-if="index<2 || showMore">
+                        <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.zcName}}</div>
+                        <div class="umw1"></div>
+                        <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.shul}}</div>
+                        <div class="umw1"></div>
+                        <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.jjf}}</div>
+                        <div class="umw1"></div>
+                        <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.lzsj}}</div>
+                    </div>
+                    <div class="more" v-if="lzList.length>2">
+                        <a href="javascript:void(0)" v-on:click="showMore=!showMore">
+                            {{showMore?'收起':'更多'}}
+                            <span class="fa" v-bind:class="showMore?'fa-angle-double-up':'fa-angle-double-down'"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="uinn uinn-at1">
+                    <div class="button ub ub-ac bc-text-head ub-pc sc-btn uc-a1" v-on:click="closeView" >返回</div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <script src="../js/appcan.js"></script>
+        <script src="../js/appcan.control.js"></script>
+        <script src="../js/vue/vue.js"></script>
+        <script src="../js/common.js"></script>
+        <script src="../component/dialog.js"></script>
+        <script>
+(function(){
+var vm = new Vue({
+    el :"#Page",
+    data : {
+        // datailList : [],
+        // imageList : null,
+        // showDialog : false,
+        lzList :[], //流转信息列表
+        showMore : false
+        
+    },
+    mounted : function(){
+        var loginUserStr = appcan.locStorage.getVal("login_user");
+        if(!loginUserStr) {
+            return;
+        }
+        var vm = this;
+        sys_common.ajax({
+            url : sys_common.rootPath + sys_common.contextPath + "lz/findRecordByBgr",
+            type : "GET",
+            dataType : "json",
+            data : {
+                bgrId : JSON.parse(loginUserStr).uuid
+            },
+            success : function(res) {
+                vm.lzList = res;
+            }
+        });
+    },
+    methods : {
+        closeView : function(){
+            uexWindow.close();
+        }
+    }
+});
+
+})();
+        </script>
+    </body>
+</html>
