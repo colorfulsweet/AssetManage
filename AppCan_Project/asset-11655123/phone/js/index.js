@@ -62,7 +62,7 @@ var vm = new Vue({
         },{
             id : "zcpd",
             name : "资产盘点",
-            url : "zc/zcpd.html",
+            url : "zc/zcpd/zcpd.html",
             callback : "openUrl"
         },{
             id : "zccl",

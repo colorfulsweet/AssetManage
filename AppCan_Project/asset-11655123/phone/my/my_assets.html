@@ -67,7 +67,7 @@ var vm = new Vue({
         imageList : null,
         showDialog : false
     },
-    mounted : function(){
+    created : function(){
         var loginUserStr = appcan.locStorage.getVal("login_user");
         if(!loginUserStr) {
             return;
