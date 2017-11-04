@@ -8,12 +8,16 @@ Vue.component("upload-dialog",{
         },
         'select_zcuuid' : {
             type : String
+        },
+        'operate_type' : {
+            type : String,
+            default : "盘点"
         }
     },
     template : '<div class="dialog-container" v-show="show_dialog"> '+
                '<div class="mask" v-on:click="hideDialog"></div>'+
                '<div class="dialog-panel">'+
-                    '<ul class=" ubb ub bc-border bc-text ub-ac uinn">'+
+                    '<ul class=" ubb ub bc-border bc-text ub-ac uinn" v-if="operate_type===\'盘点\'">'+
                         '<li class="ub-f1 ut-s ulev-app1">盘点状态</li>'+
                         '<li class="tx-r t-blu ulev-app1 ub-ae" style="width:7.5em">'+
                             '<div class="select uba bc-border bc-text" >'+
@@ -29,10 +33,10 @@ Vue.component("upload-dialog",{
                         '<li class="ub-f1 ut-s ulev-app1">备注信息</li>'+
                         '<li class="tx-r t-blu ulev-app1 ub-ae" style="width:7.5em">'+
                             '<div class="uinput uinn4">'+
-                                '<input placeholder="请输入" type="text" class="tx-r" name="beizhu" >'+
+                                '<input placeholder="请输入" type="text" class="tx-r" name="beizhu" v-model="beizhu">'+
                             '</div></li></ul>'+
                     '<ul class=" ubb ub bc-border bc-text ub-ac uinn">'+
-                        '<li class="ub-f1 ut-s ulev-app1">盘点照片</li>'+
+                        '<li class="ub-f1 ut-s ulev-app1">{{operate_type}}照片</li>'+
                         '<li class="tx-r t-blu ulev-app1 ub-ae" style="width:7.5em">'+
                             '<div class="bc-border bc-text" >'+
                             '<img style="width:7.5em;height:7.5em" :src="photoUrl" v-show="photoUrl" />'+
@@ -53,7 +57,8 @@ Vue.component("upload-dialog",{
         return {
             photoPath : null,
             statuses : ["正常","损坏","丢失","其他"],
-            status : null
+            status : null,
+            beizhu : null
         }
     },
     computed : {
@@ -67,8 +72,10 @@ Vue.component("upload-dialog",{
     },
     watch : {
         'show_dialog' : function(newVal, oldVal) {
+            //当dialog的显示与隐藏状态变化, 则清空表单
             this.status = null;
             this.photoPath = null;
+            this.beizhu = null;
         }
     },
     methods : {
@@ -77,7 +84,7 @@ Vue.component("upload-dialog",{
         },
         btnClick : function() {
             // this.$emit触发父组件的事件回调
-            if(!this.status) {
+            if(!this.status && this.operate_type==="盘点") {
                 appcan.window.openToast('请选择当前资产的盘点状态', '2000');
                 return;
             }
@@ -85,7 +92,7 @@ Vue.component("upload-dialog",{
                 appcan.window.openToast('请上传资产照片', '2000');
                 return;
             }
-            this.$emit("tr-complete", this.status, this.photoPath);
+            this.$emit("tr-complete", this.status, this.photoPath, this.beizhu);
             this.$emit("toggle-detail", false);
         },
         /**

@@ -11,6 +11,22 @@
         <link rel="stylesheet" href="css/ui-color.css">
         <link rel="stylesheet" href="css/appcan.icon.css">
         <link rel="stylesheet" href="css/appcan.control.css">
+        <style>
+.badge {
+    display: inline-block;
+    min-width: 0.8em;
+    padding: 3px 7px;
+    font-size: 0.9em;
+    font-weight: 700;
+    line-height: 1.1em;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: red;
+    border-radius: 0.8em;
+}
+        </style>
     </head>
 
     <body ontouchstart>
@@ -26,6 +42,7 @@
                                 v-if="!loginUser || !item.roles || existsSameValues(item.roles, loginUser.roles)"
                                 v-on:click="menuClick(item)" >
                             <div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">{{item.name}}</div>
+                            <span class="badge" v-if="item.badgeNum">{{item.badgeNum}}</span>
                             <div class="fa fa-angle-right ulev2 sc-text"></div>
                         </li>
                     </ul>

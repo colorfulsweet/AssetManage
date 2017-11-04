@@ -70,10 +70,16 @@ var vm = new Vue({
             url : "zc/zcpd.html",
             callback : "openUrl"
         },{
+            id : "zcrk",
+            name : "资产入库",
+            url : "zc/zcrk.html",
+            callback : "openUrl",
+            roles : ["MA"]
+        },{
             id : "qrcodeScan",
             name : "二维码扫描",
             callback : "qrcodeScan",
-            oles : ["MA","MK"]
+            roles : ["MA","MK"]
         }] , [{ //===我的===
             id : "my_info",
             name : "我的信息",
@@ -90,6 +96,11 @@ var vm = new Vue({
             url : "my/my_assets.html",
             callback : "openUrl"
         },{
+            id : "my_messages",
+            name : "我的消息",
+            url : "my/my_messages.html",
+            callback : "openUrl"
+        },{
             id : "change_pwd",
             name : "修改密码",
             url : "my/change_pwd.html",
@@ -102,9 +113,31 @@ var vm = new Vue({
                 text : "首　页"
             },{
                 icon : "fa-user",
-                text : "　我　"
+                text : "我　的"
             }]
         }
+    },
+    created : function() {
+        var _this = this;
+        sys_common.ajax({
+            type : "GET",
+            url : sys_common.rootPath + sys_common.contextPath + "pd/getTimestamp",
+            data : {r : Math.random()},
+            success : function(res) {
+                var msgs = [];
+                var timestampNum = parseInt(res);
+                var now = new Date(timestampNum);
+                if(now.getMonth() + 1 == 6 && now.getDate() >= 10) {
+                    msgs.push("请于6月30日前执行资产盘点");
+                    _this.menus[1][3].badgeNum = 1;
+                }
+                if(now.getMonth() + 1 == 12 && now.getDate() >= 10) {
+                    msgs.push("请于12月31日前执行资产盘点");
+                    _this.menus[1][3].badgeNum = 1;
+                }
+                appcan.locStorage.setVal("messages", msgs);
+            }
+        });
     },
     methods : {
         /**
