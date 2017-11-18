@@ -6,6 +6,10 @@ var vm = new Vue({
         username : localStorage.getItem("re_username"),
         password : null
     },
+    created : function(){
+        //清除缓存当中的登陆用户信息(没有正常注销的情况下会留在缓存当中)
+        appcan.locStorage.remove("login_user");
+    },
     methods : {
         loginSubmit : function() {
             if (!this.username) {

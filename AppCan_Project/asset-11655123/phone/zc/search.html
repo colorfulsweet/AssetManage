@@ -47,7 +47,7 @@
                 <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.bgr ? item.bgr.realname : null}}</div>
             </div>
         </div>
-        <div v-if="!resultList || resultList.length==0">{{tip}}</div>
+        <div class="page-tip" v-if="!resultList || resultList.length==0">{{tip}}</div>
         <div class="uinn uinn-at1">
             <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="addToList">添加到清单</div>
         </div>

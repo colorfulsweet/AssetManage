@@ -14,7 +14,7 @@
     </head>
     <body ontouchstart>
         <div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
-            <header-component v-bind:title="'流转流程'" v-bind:hasbackbtn="true"></header-component>
+            <header-component title="流转流程" v-bind:hasbackbtn="true"></header-component>
             <loading-component ></loading-component>
             <div data-control="CONTENT" id="ScrollContent">
                 <div class="ub ub-ver">
@@ -26,16 +26,16 @@
                             <li class="ub-f1 ut-s ulev-app1">编码</li>
                             <li class="tx-r t-blu ulev-app1 ub-ae">
                                 <div class="uinput uinn4">
-                                    <input placeholder="请输入编码" type="text" class="tx-r " name="orderno" id="orderno">
+                                    <input placeholder="请输入编码" type="text" class="tx-r " v-model="zcid" name="zcID">
                                 </div>
                             </li>
                         </ul>
                         <ul  class=" ubb ub bc-border bc-text ub-ac uinn">
                             <li class="ub-f1 ut-s ulev-app1">名称</li>
+                            <li class="ulev-app1 select-clear" v-show="name_index!=null" v-on:click="clearSelect('name_index')">×</li>
                             <li class="tx-r t-blu ulev-app1 ub-ae">
-                                
                                 <div class="select uba bc-border bc-text" id="as_name">
-                                    <div class="text">请选择</div>
+                                    <div class="text">{{name_index==null?'请选择':names[name_index]}}</div>
                                     <div class="icon"></div>
                                     <select id="asname" name="asname" v-model="name_index">
                                         <template v-for="(item,index) in names">
@@ -47,9 +47,10 @@
                         </ul>
                         <ul  class=" ubb ub bc-border bc-text ub-ac uinn">
                             <li class="ub-f1 ut-s ulev-app1"> 类型</li>
+                            <li class="ulev-app1 select-clear" v-show="type_index!=null" v-on:click="clearSelect('type_index')">×</li>
                             <li class="tx-r t-blu ulev-app1 ub-ae">
                                 <div class="select uba bc-border bc-text" id="as_type">
-                                    <div class="text">请选择</div>
+                                    <div class="text">{{type_index==null?'请选择':types[type_index]}}</div>
                                     <div class="icon"></div>
                                     <select id="astype" name="astype" v-model="type_index">
                                         <template v-for="(item,index) in types">
@@ -59,7 +60,6 @@
                                 </div>
                             </li>
                         </ul>
-                        
                     </div>
                     </div>
                 <div>

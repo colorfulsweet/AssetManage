@@ -71,6 +71,20 @@ var vm = new Vue({
         }
         this.loginUserId = JSON.parse(loginUserStr).uuid;
     },
+    watch : {
+        newPwd : function(newVal, oldVal) {
+            if(newVal && newVal.length > 18) {
+                appcan.window.openToast('密码长度不能超过18位', '2000');
+                this.newPwd = oldVal;
+            }
+        },
+        confirmPwd : function(newVal, oldVal) {
+            if(newVal && newVal.length > 18) {
+                appcan.window.openToast('密码长度不能超过18位', '2000');
+                this.confirmPwd = oldVal;
+            }
+        }
+    },
     methods : {
         /**
          * 修改密码 
@@ -85,7 +99,7 @@ var vm = new Vue({
                 return;
             }
             if(this.newPwd !== this.confirmPwd) {
-                appcan.window.openToast('两次输入的密码不一致', '2000');
+                appcan.window.openToast('两次输入的新密码不一致', '2000');
                 return;
             }
             sys_common.ajax({

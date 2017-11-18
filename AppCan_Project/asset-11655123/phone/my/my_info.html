@@ -10,6 +10,12 @@
         <link rel="stylesheet" href="../css/ui-color.css">
         <link rel="stylesheet" href="../css/appcan.icon.css">
         <link rel="stylesheet" href="../css/appcan.control.css">
+        <style>
+            span.list-input input {
+                width:100%;
+                font-size:1.3em;
+            }
+        </style>
     </head>
     <body ontouchstart>
         <div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
@@ -21,32 +27,67 @@
                 <div class="ub ub-hor ub-f1 ulev-1 uinn ub-ac umh4" >
                     <div class="ub-f1 ub-con ub-ac ub-pc ub">用户名</div>
                     <div class="umw1"></div>
-                    <div class="ub-f1 ub-con ub-ac ub-pc ub">{{userData.user}}</div>
+                    <div class="ub-f1 ub-con ub-ac ub-pc ub">
+                        <span v-show="!modify">{{userData.user}}</span>
+                        <span v-show="modify" class="list-input">
+                            <input name="user" v-model="userData.user" />
+                        </span>
+                    </div>
                 </div>
                 <div class="ub ub-hor ub-f1 ulev-1 uinn ub-ac umh4" >
                     <div class="ub-f1 ub-con ub-ac ub-pc ub">姓名</div>
                     <div class="umw1"></div>
-                    <div class="ub-f1 ub-con ub-ac ub-pc ub">{{userData.realname}}</div>
+                    <div class="ub-f1 ub-con ub-ac ub-pc ub">
+                        <span v-show="!modify">{{userData.realname}}</span>
+                        <span v-show="modify" class="list-input">
+                            <input name="realname" v-model="userData.realname" />
+                        </span>
+                    </div>
                 </div>
                 <div class="ub ub-hor ub-f1 ulev-1 uinn ub-ac umh4" >
                     <div class="ub-f1 ub-con ub-ac ub-pc ub">部门</div>
                     <div class="umw1"></div>
-                    <div class="ub-f1 ub-con ub-ac ub-pc ub">{{userData.department}}</div>
+                    <div class="ub-f1 ub-con ub-ac ub-pc ub">
+                        <span v-show="!modify">{{userData.department}}</span>
+                        <span v-show="modify" class="list-input">
+                            <input name="department" v-model="userData.department" />
+                        </span>
+                    </div>
                 </div>
                 <div class="ub ub-hor ub-f1 ulev-1 uinn ub-ac umh4" >
                     <div class="ub-f1 ub-con ub-ac ub-pc ub">职务</div>
                     <div class="umw1"></div>
-                    <div class="ub-f1 ub-con ub-ac ub-pc ub">{{userData.title}}</div>
+                    <div class="ub-f1 ub-con ub-ac ub-pc ub">
+                        <span v-show="!modify">{{userData.title}}</span>
+                        <span v-show="modify" class="list-input">
+                            <input name="title" v-model="userData.title" />
+                        </span>
+                    </div>
                 </div>
                 <div class="ub ub-hor ub-f1 ulev-1 uinn ub-ac umh4" >
                     <div class="ub-f1 ub-con ub-ac ub-pc ub">联系电话</div>
                     <div class="umw1"></div>
-                    <div class="ub-f1 ub-con ub-ac ub-pc ub">{{userData.lxdh}}</div>
+                    <div class="ub-f1 ub-con ub-ac ub-pc ub">
+                        <span v-show="!modify">{{userData.lxdh}}</span>
+                        <span v-show="modify" class="list-input">
+                            <input name="lxdh" v-model="userData.lxdh" />
+                        </span>
+                    </div>
                 </div>
                 <div class="ub ub-hor ub-f1 ulev-1 uinn ub-ac umh4" >
                     <div class="ub-f1 ub-con ub-ac ub-pc ub">电子邮箱</div>
                     <div class="umw1"></div>
-                    <div class="ub-f1 ub-con ub-ac ub-pc ub">{{userData.dzyx}}</div>
+                    <div class="ub-f1 ub-con ub-ac ub-pc ub">
+                        <span v-show="!modify">{{userData.dzyx}}</span>
+                        <span v-show="modify" class="list-input">
+                            <input name="dzyx" v-model="userData.dzyx" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="uinn uinn-at1" >
+                <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1" v-on:click="modifyAndSave">
+                    {{modify?'保存':'修改'}}
                 </div>
             </div>
             </div>
@@ -57,21 +98,79 @@
         <script src="../js/vue/vue.js"></script>
         <script src="../js/common.js"></script>
         <script>
-appcan.ready(function() {
+(function() {
+var loginUser = null;
 var vm = new Vue({
     el :"#Page",
     data : {
-        userData : {},
+        userData : {
+            uuid : null,
+            user : null,
+            realname : null,
+            department : null,
+            title : null,
+            lxdh : null,
+            dzyx : null
+        },
+        modify : false
     },
     created : function(){
         var loginUserStr = appcan.locStorage.getVal("login_user");
         if(!loginUserStr) {
             return;
         }
-        this.userData = JSON.parse(loginUserStr);
+        loginUser = JSON.parse(loginUserStr);
+        for(var fieldName in this.userData) {
+            this.userData[fieldName] = loginUser[fieldName];
+        }
+    },
+    methods: {
+        /**
+         * 在查看状态,点击则切换为编辑
+         * 在编辑状态,点击则保存信息并切换到查看 
+         */
+        modifyAndSave : function() {
+            if(this.modify) {
+                // 保存个人信息
+                if(!this.userData.user) {
+                    appcan.window.openToast("用户名不能为空", '2000');
+                    return;
+                }
+                if(!this.userData.realname) {
+                    appcan.window.openToast("姓名不能为空", '2000');
+                    return;
+                }
+                var _this = this;
+                var userDataCopy = {};
+                for(var fieldName in this.userData) {
+                    if(!this.userData[fieldName]) {
+                        userDataCopy[fieldName] = "";
+                    } else {
+                        userDataCopy[fieldName] = this.userData[fieldName];
+                    }
+                }
+                sys_common.ajax({
+                    url : sys_common.rootPath + sys_common.contextPath + "bgr/save",
+                    type : "POST",
+                    datatype : 'json',
+                    data : this.userData,
+                    success : function(res) {
+                        appcan.window.openToast(res.msg, '2000');
+                        _this.modify = false;
+                        //将修改过的信息回写到登陆用户信息当中
+                        for(var fieldName in this.userData) {
+                            loginUser[fieldName] = this.userData[fieldName];
+                        }
+                        appcan.locStorage.setVal("login_user", JSON.stringify(loginUser));
+                    }
+                });
+            } else {
+                this.modify = true;
+            }
+        }
     }
 });
-});
+})();
         </script>
     </body>
 </html>
