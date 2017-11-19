@@ -4,9 +4,9 @@
         //公司外网主机
         //this.rootPath = "http://123.232.10.234:8150";
         //局域网主机
-        this.rootPath = "http://192.168.1.102:9000";
+        // this.rootPath = "http://192.168.43.137:9000";
         //本地
-        // this.rootPath = "http://localhost:9000";
+        this.rootPath = "http://127.0.0.1:9000";
         //云主机
         //this.rootPath = "http://116.196.68.51:9000";
         this.contextPath = "/";

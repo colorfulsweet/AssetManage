@@ -17,8 +17,8 @@ Vue.component("upload-dialog",{
     template : '<div class="dialog-container" v-show="show_dialog"> '+
                '<div class="mask" v-on:click="hideDialog"></div>'+
                '<div class="dialog-panel">'+
-                    '<ul class=" ubb ub bc-border bc-text ub-ac uinn" v-if="operate_type===\'盘点\'">'+
-                        '<li class="ub-f1 ut-s ulev-app1">盘点状态</li>'+
+                    '<ul class=" ubb ub bc-border bc-text ub-ac uinn" v-if="operate_type===\'盘点\' || operate_type===\'处理\'">'+
+                        '<li class="ub-f1 ut-s ulev-app1">{{operate_type}}状态</li>'+
                         '<li class="tx-r t-blu ulev-app1 ub-ae" style="width:7.5em">'+
                             '<div class="select uba bc-border bc-text" >'+
                                 '<div class="text">{{status || "请选择"}}</div>'+

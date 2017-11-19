@@ -13,7 +13,7 @@
 </head>
 <body ontouchstart>
     <div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
-        <header-component v-bind:title="'资产盘点'" v-bind:hasbackbtn="true"></header-component>
+        <header-component title="资产盘点" v-bind:hasbackbtn="true"></header-component>
         <upload-dialog :show_dialog="showDialog" v-on:toggle-detail="toggleDialog"
             :select_zcuuid="selectZcUuid" v-on:tr-complete="pdComplete">
         </upload-dialog>

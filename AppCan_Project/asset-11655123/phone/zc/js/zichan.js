@@ -39,7 +39,7 @@ appcan.ready(function(){
                    return;
                 }
                 var search = {
-                   'zcID':zcID,
+                   'zcID':zcID != null ? zcID : "",
                    'mingch':name!=null ? this.names[name] : "",
                    'lbie' : type!=null ? this.types[type] : ""
                 };

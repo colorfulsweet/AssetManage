@@ -153,13 +153,13 @@ var vm = new Vue({
                     url : sys_common.rootPath + sys_common.contextPath + "bgr/save",
                     type : "POST",
                     datatype : 'json',
-                    data : this.userData,
+                    data : userDataCopy,
                     success : function(res) {
                         appcan.window.openToast(res.msg, '2000');
                         _this.modify = false;
                         //将修改过的信息回写到登陆用户信息当中
-                        for(var fieldName in this.userData) {
-                            loginUser[fieldName] = this.userData[fieldName];
+                        for(var fieldName in _this.userData) {
+                            loginUser[fieldName] = _this.userData[fieldName];
                         }
                         appcan.locStorage.setVal("login_user", JSON.stringify(loginUser));
                     }

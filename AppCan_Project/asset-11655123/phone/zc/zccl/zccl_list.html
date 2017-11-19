@@ -1,0 +1,63 @@
+<!-- 资产处理 列表页面 -->
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="../../css/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="../../css/ui-box.css">
+    <link rel="stylesheet" href="../../css/ui-base.css">
+    <link rel="stylesheet" href="../../css/ui-color.css">
+    <link rel="stylesheet" href="../../css/appcan.icon.css">
+    <link rel="stylesheet" href="../../css/appcan.control.css">
+</head>
+<body ontouchstart>
+    <div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
+        <header-component title="资产处理" v-bind:hasbackbtn="true"></header-component>
+        <upload-dialog :show_dialog="showDialog" v-on:toggle-detail="toggleDialog"
+            :select_zcuuid="selectZcUuid" v-on:tr-complete="clComplete" operate_type="处理">
+        </upload-dialog>
+        <div data-control="CONTENT" id="ScrollContent">
+        <div class="scrollbox">
+             <div class="ub uinn c-gra1 table-head">
+                <div class="ub-f1 ub-con ub-pc ub">编号</div>
+                <div class="umw1"></div>
+                <div class="ub-f1 ub-con ub-pc ub">名称</div>
+                <div class="umw1"></div>
+                <div class="ub-f1 ub-con ub-pc ub">数量</div>
+                <div class="umw1"></div>
+                <div class="ub-f1 ub-con ub-pc ub">单位</div>
+                <div class="umw1"></div>
+                <div class="ub-f1 ub-con ub-pc ub">状态</div>
+            </div>
+            <div>
+                <div class="ub ub-hor ub-f1 ulev-1 uinn ub-ac umh4" v-for="(item,index) in zcList" 
+                       v-on:click="trClick(index)" >
+                    <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.zcid}}</div>
+                    <div class="umw1"></div>
+                    <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.mingch}}</div>
+                    <div class="umw1"></div>
+                    <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.shul}}</div>
+                    <div class="umw1"></div>
+                    <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.danwei}}</div>
+                    <div class="umw1"></div>
+                    <div class="ub-f1 ub-con ub-ac ub-pc ub">{{item.clzt || '未处理'}}</div>
+                </div>
+            </div>
+            <div class="page-tip" v-if="!zcList || zcList.length==0">{{tip}}</div>
+            <div class="uinn uinn-at1">
+                <div class="button ub ub-ac bc-text-head ub-pc sc-btn uc-a1" onclick="uexWindow.close()">返回</div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+    <script src="../../js/appcan.js"></script>
+    <script src="../../js/appcan.control.js"></script>
+    <script src="../../js/vue/vue.js"></script> 
+    <script src="../../js/common.js"></script>
+    <script src="../../component/upload_dialog.js"></script>
+    <script src="js/zccl.js"></script>
+</body>
+</html>

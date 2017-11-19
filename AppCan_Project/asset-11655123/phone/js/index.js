@@ -194,7 +194,9 @@ var vm = new Vue({
         logout : function() {
             appcan.locStorage.remove("login_user");
             appcan.openWinWithUrl("login", "login.html");
-            uexWindow.close();
+            setTimeout(function(){
+                uexWindow.close();
+            }, 1000);
         }
     }
     
