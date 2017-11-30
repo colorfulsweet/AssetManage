@@ -7,10 +7,14 @@ if(loginUserStr) {
 /**
  * 二维码扫描回调函数 
  */
-var scannerCallback = function(err, data){
+var scannerCallback = function(err, data, isIphone){
     //包含type :"QR_CODE" ,code:扫描到的内容
-    data.code = data.code.replace(/\\/g,"");
-    var content = JSON.parse(data.code);
+    var content = null;
+    if(isIphone) {
+        content = JSON.parse(data.replace(/\\/g,""));
+    } else {
+        content = JSON.parse(data.code.replace(/\\/g,""));
+    }
     if(!login_user) {
         return;
     }
@@ -186,7 +190,21 @@ var vm = new Vue({
          * 调用摄像头进行二维码扫描 
          */
         qrcodeScan : function() {
-            uexScanner.open(scannerCallback);
+            //获取设备信息, 判断是android还是ios
+            //uex.cUUID -20 - iPhone生成一个随机的UUID，Android返回空。iOS的UUID是softToken。
+            var cUUID = uexDevice.getInfo(20);
+            if(cUUID) {
+                //iphone
+                alert("iphone");
+                uexQRCodeAV.cbScan = function(opCode, dataType, data){
+                    alert(data);
+                    scannerCallback(null, data, true);
+                }
+                uexQRCodeAV.startScan("");
+            } else {
+                //android
+                uexScanner.open(scannerCallback);
+            }
         },
         /**
          * 注销 
